@@ -44,7 +44,7 @@ export default function LandingScreen({ onStart }) {
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-2">
               <span className="material-symbols-outlined text-primary" data-icon="quiz" style={{fontVariationSettings: "'FILL' 1"}}>quiz</span>
             </div>
-            <span className="text-2xl font-label font-extrabold text-on-background">5.000+ Soru</span>
+            <span className="text-2xl font-label font-extrabold text-on-background">1.250 Soru</span>
             <span className="text-sm font-label font-bold text-outline uppercase tracking-wider">Kapsamlı Arşiv</span>
           </div>
           

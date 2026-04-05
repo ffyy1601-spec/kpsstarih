@@ -9,61 +9,26 @@ import ataturkIlkeVeInkilaplariText from '../../soru/atatürkilkeveinkılapları
 import ataturkDonemiDisPolitikaText from '../../soru/atatürkdönemitürkdışpolitikası.txt?raw';
 import cagdasTurkVeDunyaTarihiText from '../../soru/çağdaştürkvedünyatarihi.txt?raw';
 import { parseQuestionsFromText } from './parseQuestions.js';
+import { topicCatalog } from './topicCatalog.js';
 
-// Bu dosyada konularınızı ve soruları tutuyoruz.
-// id: kodlama tarafında kullanılan benzersiz isim (boşluksuz, türkçe karaktersiz)
-// title: ekranda görünecek konu başlığı
-// questions: o konuya ait soruların listesi.
+const rawQuestionTextById = {
+  'islamiyet-oncesi-turk-tarihi': islamiyetOncesiText,
+  'ilk-turk-islam-devletleri': ilkTurkIslamText,
+  'osmanli-siyasi-tarihi': osmanliSiyasiTarihText,
+  'osmanli-kultur-medeniyeti': osmanliKulturMedeniyetiText,
+  'xx-yuzyilda-osmanli': yirminciYuzyilOsmanliText,
+  'kurtulus-savasi-hazirlik': kurtulusSavasiHazirlikText,
+  'kurtulus-savasi-muharebeler': kurtulusSavasiMuharebelerText,
+  'ataturk-ilkel-ve-inkilaplari': ataturkIlkeVeInkilaplariText,
+  'ataturk-donemi-dis-politika': ataturkDonemiDisPolitikaText,
+  'cagdas-turk-ve-dunya': cagdasTurkVeDunyaTarihiText
+};
 
-export const kpssData = [
-  {
-    id: "islamiyet-oncesi-turk-tarihi",
-    title: "İslamiyet Öncesi Türk Tarihi",
-    questions: parseQuestionsFromText(islamiyetOncesiText)
-  },
-  {
-    id: "ilk-turk-islam-devletleri",
-    title: "İlk Türk-İslam Devletleri ve Yerleşmeleri",
-    questions: parseQuestionsFromText(ilkTurkIslamText)
-  },
-  {
-    id: "osmanli-siyasi-tarihi",
-    title: "Osmanlı Devleti Siyasi Tarihi",
-    questions: parseQuestionsFromText(osmanliSiyasiTarihText)
-  },
-  {
-    id: "osmanli-kultur-medeniyeti",
-    title: "Osmanlı Kültür ve Medeniyeti",
-    questions: parseQuestionsFromText(osmanliKulturMedeniyetiText)
-  },
-  {
-    id: "xx-yuzyilda-osmanli",
-    title: "XX. Yüzyılda Osmanlı Devleti",
-    questions: parseQuestionsFromText(yirminciYuzyilOsmanliText)
-  },
-  {
-    id: "kurtulus-savasi-hazirlik",
-    title: "Kurtuluş Savaşı Hazırlık Dönemi",
-    questions: parseQuestionsFromText(kurtulusSavasiHazirlikText)
-  },
-  {
-    id: "kurtulus-savasi-muharebeler",
-    title: "Kurtuluş Savaşı Muharebeler Dönemi",
-    questions: parseQuestionsFromText(kurtulusSavasiMuharebelerText)
-  },
-  {
-    id: "ataturk-ilkel-ve-inkilaplari",
-    title: "Atatürk İlke ve İnkılapları",
-    questions: parseQuestionsFromText(ataturkIlkeVeInkilaplariText)
-  },
-  {
-    id: "ataturk-donemi-dis-politika",
-    title: "Atatürk Dönemi Türk Dış Politikası",
-    questions: parseQuestionsFromText(ataturkDonemiDisPolitikaText)
-  },
-  {
-    id: "cagdas-turk-ve-dunya",
-    title: "Çağdaş Türk ve Dünya Tarihi",
-    questions: parseQuestionsFromText(cagdasTurkVeDunyaTarihiText)
-  }
-];
+export const kpssData = topicCatalog.map((topic) => ({
+  id: topic.id,
+  title: topic.title,
+  slug: topic.slug,
+  intro: topic.intro,
+  studyFocus: topic.studyFocus,
+  questions: parseQuestionsFromText(rawQuestionTextById[topic.id])
+}));
