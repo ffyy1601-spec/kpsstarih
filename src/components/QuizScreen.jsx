@@ -147,23 +147,23 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
       )}
 
       {/* Üstte küçük bir çıkış butonu (navigasyon barı olmadan) */}
-      <div className="absolute top-4 right-4 z-40">
-        <button onClick={() => setShowExitConfirm(true)} className="p-2 rounded-xl bg-red-50 text-error flex items-center gap-1 font-bold text-sm shadow-sm hover:scale-105 transition-transform">
+      <div className="fixed top-3 right-3 z-40 sm:top-4 sm:right-4">
+        <button onClick={() => setShowExitConfirm(true)} className="px-2.5 py-2 rounded-xl bg-red-50/95 text-error flex items-center gap-1 font-bold text-xs sm:text-sm shadow-sm hover:scale-105 transition-transform">
           <span className="material-symbols-outlined text-sm">close</span> Çıkış
         </button>
       </div>
 
-      <main className="flex-grow pt-12 pb-4 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col justify-center">
+      <main className="flex-grow h-dvh max-h-dvh overflow-hidden pt-14 pb-3 px-3 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col justify-center">
         {/* Progress Indicator */}
-        <div className="mb-4 space-y-2">
-          <div className="flex justify-between items-end">
+        <div className="mb-3 space-y-2 shrink-0">
+          <div className="flex justify-between items-end gap-3">
             <div>
-              <span className="font-label text-[10px] uppercase tracking-widest text-secondary font-bold">{topic.title}</span>
-              <h1 className="text-xl font-headline font-extrabold text-on-surface">Soru {currentIndex + 1} / {maxQuestions}</h1>
+              <span className="font-label text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-secondary font-bold">{topic.title}</span>
+              <h1 className="text-lg sm:text-xl font-headline font-extrabold text-on-surface">Soru {currentIndex + 1} / {maxQuestions}</h1>
             </div>
             {/* Skor / İstatistik yer tutucuları */}
             <div className="flex gap-2">
-              <div className="bg-surface-container-low px-3 py-1 rounded-xl flex items-center gap-1">
+              <div className="bg-surface-container-low px-2.5 py-1 rounded-xl flex items-center gap-1">
                  <span className="material-symbols-outlined text-tertiary-fixed filled-icon text-[1rem]">bolt</span>
                  <span className="font-label text-xs font-bold">{currentIndex * 10}</span>
               </div>
@@ -176,12 +176,12 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </div>
 
         {/* Jokerler Üstte */}
-        <div className="flex gap-4 justify-center mb-6 z-40 relative">
+        <div className="flex gap-3 justify-center mb-4 sm:mb-6 z-40 relative shrink-0">
           {/* Yarı Yarıya */}
           <button 
             onClick={useFiftyFifty}
             disabled={jokers.fiftyFifty || status === 'locked' || status === 'revealed'}
-            className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-tertiary-container/10 text-tertiary-fixed hover:bg-tertiary-container/20'}`}
+            className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-tertiary-container/10 text-tertiary-fixed hover:bg-tertiary-container/20'}`}
             title="Yarı Yarıya (İki şık eler)"
           >
             <div className="relative flex items-center justify-center">
@@ -194,7 +194,7 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
              onClick={useSecondChance}
              disabled={jokers.secondChance || status === 'locked' || status === 'revealed'}
-             className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200')}`}
+             className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200')}`}
              title="Çift Cevap (1 Yanlış hakkı)"
           >
             <div className="relative flex items-center justify-center">
@@ -207,7 +207,7 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
             onClick={useSeyirci}
             disabled={jokers.seyirci || status === 'locked' || status === 'revealed'}
-            className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-secondary-container/10 text-secondary hover:bg-secondary-container/20'}`}
+            className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-secondary-container/10 text-secondary hover:bg-secondary-container/20'}`}
             title="Seyirci Jokeri"
           >
             <div className="relative flex items-center justify-center">
@@ -218,14 +218,14 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </div>
 
         {/* Question Card */}
-        <section className="bg-surface-container-lowest/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 mb-6 shadow-xl shadow-slate-200/50 border border-white/50 relative overflow-hidden">
+        <section className="bg-surface-container-lowest/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 md:p-8 mb-4 sm:mb-6 shadow-xl shadow-slate-200/50 border border-white/50 relative overflow-hidden shrink-0">
           {/* Soru kartı arkası hafif glow efekti */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mt-10 -mr-10"></div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container text-secondary-dim rounded-full mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container text-secondary-dim rounded-full mb-3 sm:mb-4 shadow-sm">
             <span className="material-symbols-outlined text-[12px]">auto_awesome</span>
             <span className="font-label text-[10px] md:text-xs uppercase font-bold tracking-widest">Soru Metni</span>
           </div>
-          <p className="text-xl md:text-3xl font-headline font-bold leading-tight md:leading-snug text-on-surface min-h-[80px] flex items-center relative z-10">
+          <p className="text-base sm:text-lg md:text-3xl font-headline font-bold leading-snug md:leading-snug text-on-surface min-h-0 max-h-[20dvh] sm:max-h-none overflow-y-auto pr-1 relative z-10">
             {currentQ.questionText.split('değildir?').map((part, i, arr) => 
                i === arr.length - 1 && arr.length > 1 
                  ? <React.Fragment key={i}><span className="text-primary underline decoration-primary-container decoration-4 underline-offset-4">değildir?</span>{part}</React.Fragment>
@@ -235,10 +235,10 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </section>
 
         {/* Options Grid (2x2 Structure) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 relative">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 relative content-start">
           
           {audienceData && (
-             <div className="absolute -top-14 right-0 bg-white p-2 rounded-xl shadow-xl flex gap-4 z-10 border border-slate-100">
+             <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:left-auto sm:right-0 sm:translate-x-0 bg-white p-2 rounded-xl shadow-xl flex gap-3 z-10 border border-slate-100">
                 {audienceData.map((pct, i) => !eliminatedOptions.includes(i) && (
                   <div key={i} className="flex flex-col items-center">
                      <div className="h-12 w-4 bg-slate-100 rounded-full flex items-end overflow-hidden">
@@ -254,9 +254,9 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
             const isEliminated = eliminatedOptions.includes(idx);
             
             // Gizlenen şıkların yapıyı bozmaması için `invisible` yapıyoruz
-            let btnClass = "group flex items-center text-left px-4 py-5 md:py-6 md:px-6 rounded-2xl border-2 transition-all duration-300 shadow-sm hover:shadow-md ";
-            let letterClass = "w-10 h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center rounded-2xl font-headline font-extrabold text-base md:text-xl mr-4 md:mr-5 transition-colors ";
-            let textClass = "text-[14px] md:text-[17px] font-headline font-semibold leading-snug flex-grow ";
+            let btnClass = "group min-h-[92px] sm:min-h-[104px] flex items-center text-left px-3 py-3 sm:px-4 sm:py-4 md:py-6 md:px-6 rounded-2xl border-2 transition-all duration-300 shadow-sm hover:shadow-md ";
+            let letterClass = "w-9 h-9 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center rounded-2xl font-headline font-extrabold text-sm sm:text-base md:text-xl mr-3 sm:mr-4 md:mr-5 transition-colors ";
+            let textClass = "text-[12px] sm:text-[13px] md:text-[17px] font-headline font-semibold leading-snug flex-grow ";
             let showCheck = false;
             let showCross = false;
 

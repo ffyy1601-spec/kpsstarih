@@ -527,6 +527,20 @@ h3 {
 
   .top-nav {
     width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .top-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-nav a {
+    white-space: nowrap;
+    padding: 9px 12px;
+    font-size: 0.95rem;
   }
 
   .icon-box {
@@ -538,6 +552,10 @@ h3 {
   .stats-grid {
     margin-top: 52px;
     gap: 18px;
+  }
+
+  .site-footer {
+    padding-top: 28px;
   }
 
   .hero-actions,
