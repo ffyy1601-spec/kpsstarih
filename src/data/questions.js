@@ -1,3 +1,15 @@
+import islamiyetOncesiText from '../../soru/islamiyetöncesi.txt?raw';
+import ilkTurkIslamText from '../../soru/türkislamdevletleriveyerleşmeleri.txt?raw';
+import osmanliSiyasiTarihText from '../../soru/osmanlıdevletisiyahitarihi.txt?raw';
+import osmanliKulturMedeniyetiText from '../../soru/osmanlıkültürmedeniyeti.txt?raw';
+import yirminciYuzyilOsmanliText from '../../soru/XXyüzyıldaosmanlıdevleti.txt?raw';
+import kurtulusSavasiHazirlikText from '../../soru/kurtuluşsavaşıhazırlıkdönemi.txt?raw';
+import kurtulusSavasiMuharebelerText from '../../soru/kurtuluşsavasımuharebelerdönemi.txt?raw';
+import ataturkIlkeVeInkilaplariText from '../../soru/atatürkilkeveinkılapları.txt?raw';
+import ataturkDonemiDisPolitikaText from '../../soru/atatürkdönemitürkdışpolitikası.txt?raw';
+import cagdasTurkVeDunyaTarihiText from '../../soru/çağdaştürkvedünyatarihi.txt?raw';
+import { parseQuestionsFromText } from './parseQuestions.js';
+
 // Bu dosyada konularınızı ve soruları tutuyoruz.
 // id: kodlama tarafında kullanılan benzersiz isim (boşluksuz, türkçe karaktersiz)
 // title: ekranda görünecek konu başlığı
@@ -7,75 +19,51 @@ export const kpssData = [
   {
     id: "islamiyet-oncesi-turk-tarihi",
     title: "İslamiyet Öncesi Türk Tarihi",
-    questions: [
-      {
-        questionText: "Aşağıdakilerden hangisi İslamiyet öncesi Türk devletlerinde kurultaya katılan üyelere verilen isimdir?",
-        options: ["Toygun", "Tudun", "Ağılığ", "Bitikçi"],
-        correctAnswerIndex: 0
-      }
-    ]
+    questions: parseQuestionsFromText(islamiyetOncesiText)
   },
   {
     id: "ilk-turk-islam-devletleri",
     title: "İlk Türk-İslam Devletleri ve Yerleşmeleri",
-    questions: [
-      {
-        questionText: "Sultan unvanını kullanan ilk Türk hükümdarı kimdir?",
-        options: ["Gazneli Mahmut", "Tuğrul Bey", "Alparslan", "Satuk Buğra Han"],
-        correctAnswerIndex: 0
-      }
-    ]
+    questions: parseQuestionsFromText(ilkTurkIslamText)
   },
   {
     id: "osmanli-siyasi-tarihi",
     title: "Osmanlı Devleti Siyasi Tarihi",
-    questions: [
-      {
-        questionText: "İstanbul'u kuşatan ilk Osmanlı padişahı aşağıdakilerden hangisidir?",
-        options: ["Yıldırım Bayezid", "I. Murad", "Orhan Bey", "II. Mehmed"],
-        correctAnswerIndex: 0
-      }
-    ]
+    questions: parseQuestionsFromText(osmanliSiyasiTarihText)
   },
   {
     id: "osmanli-kultur-medeniyeti",
     title: "Osmanlı Kültür ve Medeniyeti",
-    questions: [
-      {
-        questionText: "Osmanlı Devleti'nde gelirleri doğrudan devlet hazinesine (timsal hazinesine) aktarılan topraklara ne ad verilir?",
-        options: ["Mukataa", "Dirlik", "Has", "Vakıf"],
-        correctAnswerIndex: 0
-      }
-    ]
+    questions: parseQuestionsFromText(osmanliKulturMedeniyetiText)
   },
   {
     id: "xx-yuzyilda-osmanli",
     title: "XX. Yüzyılda Osmanlı Devleti",
-    questions: []
+    questions: parseQuestionsFromText(yirminciYuzyilOsmanliText)
   },
   {
     id: "kurtulus-savasi-hazirlik",
     title: "Kurtuluş Savaşı Hazırlık Dönemi",
-    questions: []
+    questions: parseQuestionsFromText(kurtulusSavasiHazirlikText)
   },
   {
     id: "kurtulus-savasi-muharebeler",
     title: "Kurtuluş Savaşı Muharebeler Dönemi",
-    questions: []
+    questions: parseQuestionsFromText(kurtulusSavasiMuharebelerText)
   },
   {
     id: "ataturk-ilkel-ve-inkilaplari",
     title: "Atatürk İlke ve İnkılapları",
-    questions: []
+    questions: parseQuestionsFromText(ataturkIlkeVeInkilaplariText)
   },
   {
     id: "ataturk-donemi-dis-politika",
     title: "Atatürk Dönemi Türk Dış Politikası",
-    questions: []
+    questions: parseQuestionsFromText(ataturkDonemiDisPolitikaText)
   },
   {
     id: "cagdas-turk-ve-dunya",
     title: "Çağdaş Türk ve Dünya Tarihi",
-    questions: []
+    questions: parseQuestionsFromText(cagdasTurkVeDunyaTarihiText)
   }
 ];

@@ -9,12 +9,14 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
     : kpssData.find(t => t.id === topicId);
     
   // Karışıksa hepsini birleştir, karıştır ve 20 soru seç. Değilse normal topic.
+  const shuffleQuestions = (questionList) => [...questionList].sort(() => 0.5 - Math.random());
+
   const [questions] = useState(() => {
     if (isMixed) {
       const allQ = kpssData.flatMap(t => t.questions || []);
-      return allQ.sort(() => 0.5 - Math.random()).slice(0, 20);
+      return shuffleQuestions(allQ).slice(0, 20);
     }
-    return topic ? (topic.questions || []) : [];
+    return topic ? shuffleQuestions(topic.questions || []) : [];
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
