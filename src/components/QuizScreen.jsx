@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { kpssData } from '../data/questions';
 
 export default function QuizScreen({ topicId, onBack, onGameOver }) {
@@ -146,46 +145,51 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </div>
       )}
 
-      {/* Üstte küçük bir çıkış butonu (navigasyon barı olmadan) */}
-      <div className="fixed top-3 right-3 z-40 sm:top-4 sm:right-4">
-        <button onClick={() => setShowExitConfirm(true)} className="px-2.5 py-2 rounded-xl bg-red-50/95 text-error flex items-center gap-1 font-bold text-xs sm:text-sm shadow-sm hover:scale-105 transition-transform">
-          <span className="material-symbols-outlined text-sm">close</span> Çıkış
-        </button>
-      </div>
-
       <main className="flex-grow h-dvh max-h-dvh overflow-hidden pt-14 pb-3 px-3 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col justify-center">
-        {/* Progress Indicator */}
-        <div className="mb-3 space-y-2 shrink-0">
-          <div className="flex justify-between items-end gap-3">
-            <div>
-              <span className="font-label text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-secondary font-bold">{topic.title}</span>
-              <h1 className="text-lg sm:text-xl font-headline font-extrabold text-on-surface">Soru {currentIndex + 1} / {maxQuestions}</h1>
-            </div>
-            {/* Skor / İstatistik yer tutucuları */}
-            <div className="flex gap-2">
-              <div className="bg-surface-container-low px-2.5 py-1 rounded-xl flex items-center gap-1">
-                 <span className="material-symbols-outlined text-tertiary-fixed filled-icon text-[1rem]">bolt</span>
-                 <span className="font-label text-xs font-bold">{currentIndex * 10}</span>
+        <section className="mb-4 shrink-0 rounded-[28px] border border-white/60 bg-surface-container-lowest/85 p-4 shadow-[0_16px_40px_rgba(148,163,184,0.16)] backdrop-blur-xl">
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="mb-2 inline-flex max-w-full items-center rounded-full bg-secondary-container/45 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-secondary-dim">
+                <span className="truncate">{topic.title}</span>
               </div>
+              <h1 className="text-[1.9rem] leading-none sm:text-[2.15rem] font-headline font-extrabold tracking-tight text-on-surface">
+                Soru {currentIndex + 1}
+                <span className="ml-2 text-lg font-bold text-on-surface-variant">/ {maxQuestions}</span>
+              </h1>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <div className="flex items-center gap-1 rounded-2xl bg-amber-50 px-3 py-2 text-on-surface shadow-sm">
+                <span className="material-symbols-outlined filled-icon text-[18px] text-amber-500">bolt</span>
+                <span className="font-label text-sm font-extrabold">{currentIndex * 10}</span>
+              </div>
+              <button
+                onClick={() => setShowExitConfirm(true)}
+                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 text-error shadow-sm transition-transform hover:scale-105"
+                aria-label="Çıkış"
+              >
+                <span className="material-symbols-outlined text-[19px]">close</span>
+              </button>
             </div>
           </div>
-          
-          <div className="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-primary to-primary-container transition-all duration-500" style={{ width: `${progressPercent}%` }}></div>
-          </div>
-        </div>
 
-        {/* Jokerler Üstte */}
-        <div className="flex gap-3 justify-center mb-4 sm:mb-6 z-40 relative shrink-0">
+          <div className="mb-4 h-2.5 w-full overflow-hidden rounded-full bg-surface-container-high">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-primary via-primary to-primary-container transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            ></div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
           {/* Yarı Yarıya */}
           <button 
             onClick={useFiftyFifty}
             disabled={jokers.fiftyFifty || status === 'locked' || status === 'revealed'}
-            className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-tertiary-container/10 text-tertiary-fixed hover:bg-tertiary-container/20'}`}
+            className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-amber-50 text-amber-500 hover:bg-amber-100'}`}
             title="Yarı Yarıya (İki şık eler)"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined filled-icon">lightbulb</span>
+              <span className="material-symbols-outlined filled-icon text-[24px]">lightbulb</span>
               {jokers.fiftyFifty && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
@@ -194,11 +198,11 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
              onClick={useSecondChance}
              disabled={jokers.secondChance || status === 'locked' || status === 'revealed'}
-             className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200')}`}
+             className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200')}`}
              title="Çift Cevap (1 Yanlış hakkı)"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined filled-icon">favorite</span>
+              <span className="material-symbols-outlined filled-icon text-[24px]">favorite</span>
               {jokers.secondChance && !activeSecondChance && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
@@ -207,15 +211,16 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
             onClick={useSeyirci}
             disabled={jokers.seyirci || status === 'locked' || status === 'revealed'}
-            className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-secondary-container/10 text-secondary hover:bg-secondary-container/20'}`}
+            className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-sky-50 text-secondary hover:bg-sky-100'}`}
             title="Seyirci Jokeri"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined">equalizer</span>
+              <span className="material-symbols-outlined text-[24px]">equalizer</span>
               {jokers.seyirci && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
-        </div>
+          </div>
+        </section>
 
         {/* Question Card */}
         <section className="bg-surface-container-lowest/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 md:p-8 mb-4 sm:mb-6 shadow-xl shadow-slate-200/50 border border-white/50 relative overflow-hidden shrink-0">
@@ -235,7 +240,7 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </section>
 
         {/* Options Grid (2x2 Structure) */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 relative content-start">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 relative content-start">
           
           {audienceData && (
              <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:left-auto sm:right-0 sm:translate-x-0 bg-white p-2 rounded-xl shadow-xl flex gap-3 z-10 border border-slate-100">
