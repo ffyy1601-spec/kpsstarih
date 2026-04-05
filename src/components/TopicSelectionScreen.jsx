@@ -1,17 +1,31 @@
 import React from 'react';
+import {
+  ArrowLeftRight,
+  BadgeHelp,
+  BookOpen,
+  Castle,
+  FileText,
+  Globe,
+  Home,
+  Landmark,
+  Medal,
+  ScrollText,
+  Swords,
+  TimerReset
+} from 'lucide-react';
 import { kpssData } from '../data/questions';
 
 const topicStyles = [
-  { bg: 'bg-orange-100', text: 'text-orange-600', icon: 'travel_explore' },
-  { bg: 'bg-sky-100', text: 'text-sky-600', icon: 'fort' },
-  { bg: 'bg-red-100', text: 'text-red-600', icon: 'swords' },
-  { bg: 'bg-emerald-100', text: 'text-emerald-600', icon: 'museum' },
-  { bg: 'bg-indigo-100', text: 'text-indigo-600', icon: 'timeline' },
-  { bg: 'bg-amber-100', text: 'text-amber-600', icon: 'assignment' },
-  { bg: 'bg-rose-100', text: 'text-rose-600', icon: 'military_tech' },
-  { bg: 'bg-violet-100', text: 'text-violet-600', icon: 'auto_awesome' },
-  { bg: 'bg-teal-100', text: 'text-teal-600', icon: 'public' },
-  { bg: 'bg-fuchsia-100', text: 'text-fuchsia-600', icon: 'history_edu' }
+  { bg: 'bg-orange-100', text: 'text-orange-600', icon: Globe },
+  { bg: 'bg-sky-100', text: 'text-sky-600', icon: Landmark },
+  { bg: 'bg-red-100', text: 'text-red-600', icon: Swords },
+  { bg: 'bg-emerald-100', text: 'text-emerald-600', icon: Castle },
+  { bg: 'bg-indigo-100', text: 'text-indigo-600', icon: TimerReset },
+  { bg: 'bg-amber-100', text: 'text-amber-600', icon: FileText },
+  { bg: 'bg-rose-100', text: 'text-rose-600', icon: Medal },
+  { bg: 'bg-violet-100', text: 'text-violet-600', icon: ScrollText },
+  { bg: 'bg-teal-100', text: 'text-teal-600', icon: BookOpen },
+  { bg: 'bg-fuchsia-100', text: 'text-fuchsia-600', icon: BadgeHelp }
 ];
 
 export default function TopicSelectionScreen({ onSelectTopic, onHome }) {
@@ -23,7 +37,7 @@ export default function TopicSelectionScreen({ onSelectTopic, onHome }) {
             onClick={onHome}
             className="inline-flex items-center gap-1.5 rounded-full border border-white/70 bg-surface-container-lowest/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-secondary shadow-sm"
           >
-            <span className="material-symbols-outlined text-[15px]">home</span>
+            <Home className="h-4 w-4" />
             Ana Sayfa
           </button>
         </div>
@@ -34,7 +48,7 @@ export default function TopicSelectionScreen({ onSelectTopic, onHome }) {
         >
           <div className="flex items-center gap-2.5 sm:gap-4">
             <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md shrink-0">
-              <span className="material-symbols-outlined text-[24px] sm:text-3xl font-bold">shuffle</span>
+              <ArrowLeftRight className="h-5 w-5 sm:h-7 sm:w-7" />
             </div>
             <div>
               <h2 className="font-headline text-base sm:text-xl md:text-2xl font-bold">Karışık Soru Çöz</h2>
@@ -52,6 +66,7 @@ export default function TopicSelectionScreen({ onSelectTopic, onHome }) {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
           {kpssData.map((topic, index) => {
             const style = topicStyles[index % topicStyles.length];
+            const Icon = style.icon;
 
             return (
               <div
@@ -61,9 +76,7 @@ export default function TopicSelectionScreen({ onSelectTopic, onHome }) {
               >
                 <div className="flex flex-col items-center text-center flex-grow">
                   <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full ${style.bg} flex items-center justify-center mb-2.5 sm:mb-3`}>
-                    <span className={`material-symbols-outlined text-[1.05rem] sm:text-[1.4rem] ${style.text}`}>
-                      {style.icon}
-                    </span>
+                    <Icon className={`h-[1.05rem] w-[1.05rem] sm:h-[1.4rem] sm:w-[1.4rem] ${style.text}`} />
                   </div>
                   <h3 className="font-headline text-[12px] sm:text-[14px] lg:text-[15px] font-bold mb-3 text-on-surface leading-snug">
                     {topic.title}

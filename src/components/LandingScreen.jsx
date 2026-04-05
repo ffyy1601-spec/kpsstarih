@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rocket, HelpCircle, Zap, Trophy } from 'lucide-react';
 
 export default function LandingScreen({ onStart }) {
   return (
@@ -28,9 +29,7 @@ export default function LandingScreen({ onStart }) {
             onClick={onStart}
             className="w-full sm:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 sm:px-10 py-4 sm:py-5 rounded-xl font-headline font-bold text-base sm:text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined" data-icon="rocket_launch" style={{ fontVariationSettings: "'FILL' 1" }}>
-              rocket_launch
-            </span>
+            <Rocket className="h-5 w-5" />
             Teste Başla
           </button>
         </div>
@@ -38,9 +37,7 @@ export default function LandingScreen({ onStart }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full">
           <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl flex flex-col items-center justify-center space-y-2 border-b-4 border-primary/20">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-              <span className="material-symbols-outlined text-primary" data-icon="quiz" style={{ fontVariationSettings: "'FILL' 1" }}>
-                quiz
-              </span>
+              <HelpCircle className="h-6 w-6 text-primary" />
             </div>
             <span className="text-xl sm:text-2xl font-label font-extrabold text-on-background">1.250 Soru</span>
             <span className="text-sm font-label font-bold text-outline uppercase tracking-wider">Kapsamlı Arşiv</span>
@@ -48,9 +45,7 @@ export default function LandingScreen({ onStart }) {
 
           <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl flex flex-col items-center justify-center space-y-2 border-b-4 border-secondary/20">
             <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mb-2">
-              <span className="material-symbols-outlined text-secondary" data-icon="bolt" style={{ fontVariationSettings: "'FILL' 1" }}>
-                bolt
-              </span>
+              <Zap className="h-6 w-6 text-secondary" />
             </div>
             <span className="text-xl sm:text-2xl font-label font-extrabold text-on-background">24/7 Erişim</span>
             <span className="text-sm font-label font-bold text-outline uppercase tracking-wider">Her An Yanında</span>
@@ -58,9 +53,7 @@ export default function LandingScreen({ onStart }) {
 
           <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl flex flex-col items-center justify-center space-y-2 border-b-4 border-tertiary-container/20">
             <div className="w-12 h-12 bg-tertiary-container/10 rounded-full flex items-center justify-center mb-2">
-              <span className="material-symbols-outlined text-tertiary" data-icon="military_tech" style={{ fontVariationSettings: "'FILL' 1" }}>
-                military_tech
-              </span>
+              <Trophy className="h-6 w-6 text-tertiary" />
             </div>
             <span className="text-xl sm:text-2xl font-label font-extrabold text-on-background">%98 Başarı</span>
             <span className="text-sm font-label font-bold text-outline uppercase tracking-wider">Sınav Odaklı</span>

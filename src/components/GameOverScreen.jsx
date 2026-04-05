@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertCircle, Home, Lightbulb, RefreshCcw, Trophy } from 'lucide-react';
 
 export default function GameOverScreen({ result, onRestart, onHome }) {
   const isWin = result.win;
@@ -10,12 +11,11 @@ export default function GameOverScreen({ result, onRestart, onHome }) {
           className={`mb-3 sm:mb-6 inline-flex items-center justify-center w-20 h-20 sm:w-32 sm:h-32 rounded-full ${isWin ? 'bg-success-container/20' : 'bg-error-container/20'} relative`}
         >
           <div className={`absolute inset-0 rounded-full border-[3px] sm:border-4 ${isWin ? 'border-primary/30' : 'border-error/30'} animate-ping`}></div>
-          <span
-            className={`material-symbols-outlined ${isWin ? 'text-primary' : 'text-error'} text-5xl sm:text-7xl`}
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            {isWin ? 'emoji_events' : 'heart_broken'}
-          </span>
+          {isWin ? (
+            <Trophy className="h-12 w-12 sm:h-16 sm:w-16 text-primary" />
+          ) : (
+            <AlertCircle className="h-12 w-12 sm:h-16 sm:w-16 text-error" />
+          )}
         </div>
 
         <h1 className="font-headline font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tight text-on-surface mb-2 sm:mb-4">
@@ -23,9 +23,7 @@ export default function GameOverScreen({ result, onRestart, onHome }) {
         </h1>
 
         <p className="text-on-surface-variant text-sm sm:text-lg max-w-md mx-auto">
-          {isWin
-            ? 'Tüm soruları başarıyla tamamladınız.'
-            : 'Yanlış cevap nedeniyle bu tur burada sona erdi.'}
+          {isWin ? 'Tüm soruları başarıyla tamamladınız.' : 'Yanlış cevap nedeniyle bu tur burada sona erdi.'}
         </p>
       </div>
 
@@ -50,12 +48,7 @@ export default function GameOverScreen({ result, onRestart, onHome }) {
       {!isWin && result.correctAnswer && (
         <div className="w-full bg-tertiary-container/10 p-3 sm:p-8 rounded-xl border-l-[6px] sm:border-l-8 border-tertiary mb-3 sm:mb-8">
           <div className="flex items-start gap-2 sm:gap-4">
-            <span
-              className="material-symbols-outlined text-tertiary mt-0.5 sm:mt-1 text-[20px] sm:text-[24px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              lightbulb
-            </span>
+            <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-tertiary mt-0.5 sm:mt-1" />
             <div>
               <span className="font-label text-[10px] sm:text-sm text-tertiary font-extrabold block mb-1 sm:mb-2 tracking-wide uppercase">
                 Kaçırdığınız Doğru Cevap
@@ -73,7 +66,7 @@ export default function GameOverScreen({ result, onRestart, onHome }) {
           onClick={onRestart}
           className="w-full py-3.5 sm:py-5 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold text-base sm:text-lg shadow-xl shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2 sm:gap-3"
         >
-          <span className="material-symbols-outlined">replay</span>
+          <RefreshCcw className="h-5 w-5" />
           Hemen Yeniden Oyna
         </button>
 
@@ -81,7 +74,7 @@ export default function GameOverScreen({ result, onRestart, onHome }) {
           onClick={onHome}
           className="w-full py-3.5 sm:py-5 rounded-xl border-2 border-outline-variant/30 text-secondary font-headline font-bold text-base sm:text-lg hover:bg-surface-container-low transition-colors active:scale-[0.98] flex items-center justify-center gap-2 sm:gap-3"
         >
-          <span className="material-symbols-outlined">category</span>
+          <Home className="h-5 w-5" />
           Konu Seçimine Dön
         </button>
       </div>
