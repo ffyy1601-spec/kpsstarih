@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KPSS Tarih Soru Çözümü</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary-container": "#b28cff",
+                "inverse-surface": "#060e20",
+                "surface-bright": "#f6f6ff",
+                "secondary-dim": "#00557b",
+                "error": "#b41340",
+                "primary-fixed-dim": "#a67aff",
+                "surface-container-lowest": "#ffffff",
+                "on-background": "#272e42",
+                "on-primary-container": "#2e006c",
+                "primary": "#702ae1",
+                "tertiary": "#815100",
+                "secondary-fixed": "#a4d8ff",
+                "primary-fixed": "#b28cff",
+                "surface-container-highest": "#d1dcff",
+                "on-primary-fixed-variant": "#390083",
+                "on-error": "#ffefef",
+                "on-tertiary": "#fff0e3",
+                "background": "#f6f6ff",
+                "surface-container": "#e2e7ff",
+                "on-surface-variant": "#535b71",
+                "tertiary-dim": "#714600",
+                "on-tertiary-fixed": "#2a1700",
+                "surface": "#f6f6ff",
+                "on-secondary-container": "#004c6f",
+                "secondary-container": "#a4d8ff",
+                "tertiary-fixed": "#f8a010",
+                "on-primary": "#f8f0ff",
+                "tertiary-container": "#f8a010",
+                "on-tertiary-fixed-variant": "#563400",
+                "on-surface": "#272e42",
+                "tertiary-fixed-dim": "#e79400",
+                "on-primary-fixed": "#000000",
+                "on-secondary": "#e9f4ff",
+                "error-container": "#f74b6d",
+                "on-error-container": "#510017",
+                "outline-variant": "#a5adc6",
+                "surface-container-high": "#d9e2ff",
+                "inverse-on-surface": "#959cb5",
+                "on-secondary-fixed-variant": "#00567c",
+                "secondary": "#00628c",
+                "primary-dim": "#6411d5",
+                "secondary-fixed-dim": "#81ccff",
+                "surface-variant": "#d1dcff",
+                "on-tertiary-container": "#4a2c00",
+                "surface-container-low": "#eef0ff",
+                "error-dim": "#a70138",
+                "surface-tint": "#702ae1",
+                "inverse-primary": "#a476ff",
+                "outline": "#6f768e",
+                "surface-dim": "#c7d4fa",
+                "on-secondary-fixed": "#003853"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Manrope"],
+                "body": ["Manrope"],
+                "label": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-surface font-body text-on-surface min-h-screen relative overflow-x-hidden">
+    <!-- Premium Animated Background Blobs -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] bg-primary/20 blur-[120px] rounded-full mix-blend-multiply animate-[pulse_8s_ease-in-out_infinite]"></div>
+      <div class="absolute top-[10%] -right-[10%] w-[40vw] h-[40vw] bg-tertiary-fixed/20 blur-[120px] rounded-full mix-blend-multiply animate-[pulse_10s_ease-in-out_infinite] style='animation-delay: 2s;'"></div>
+      <div class="absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] bg-secondary-fixed/20 blur-[150px] rounded-full mix-blend-multiply animate-[pulse_12s_ease-in-out_infinite] style='animation-delay: 4s;'"></div>
+      <!-- Subtle white/glass overlay for smoothness -->
+      <div class="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+    </div>
+
+    <div id="root" class="relative z-10 flex flex-col min-h-screen"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

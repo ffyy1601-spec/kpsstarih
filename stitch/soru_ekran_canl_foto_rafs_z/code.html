@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#b28cff",
+                    "inverse-surface": "#060e20",
+                    "surface-bright": "#f6f6ff",
+                    "secondary-dim": "#00557b",
+                    "error": "#b41340",
+                    "primary-fixed-dim": "#a67aff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#272e42",
+                    "on-primary-container": "#2e006c",
+                    "primary": "#702ae1",
+                    "tertiary": "#815100",
+                    "secondary-fixed": "#a4d8ff",
+                    "primary-fixed": "#b28cff",
+                    "surface-container-highest": "#d1dcff",
+                    "on-primary-fixed-variant": "#390083",
+                    "on-error": "#ffefef",
+                    "on-tertiary": "#fff0e3",
+                    "background": "#f6f6ff",
+                    "surface-container": "#e2e7ff",
+                    "on-surface-variant": "#535b71",
+                    "tertiary-dim": "#714600",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#f6f6ff",
+                    "on-secondary-container": "#004c6f",
+                    "secondary-container": "#a4d8ff",
+                    "tertiary-fixed": "#f8a010",
+                    "on-primary": "#f8f0ff",
+                    "tertiary-container": "#f8a010",
+                    "on-tertiary-fixed-variant": "#563400",
+                    "on-surface": "#272e42",
+                    "tertiary-fixed-dim": "#e79400",
+                    "on-primary-fixed": "#000000",
+                    "on-secondary": "#e9f4ff",
+                    "error-container": "#f74b6d",
+                    "on-error-container": "#510017",
+                    "outline-variant": "#a5adc6",
+                    "surface-container-high": "#d9e2ff",
+                    "inverse-on-surface": "#959cb5",
+                    "on-secondary-fixed-variant": "#00567c",
+                    "secondary": "#00628c",
+                    "primary-dim": "#6411d5",
+                    "secondary-fixed-dim": "#81ccff",
+                    "surface-variant": "#d1dcff",
+                    "on-tertiary-container": "#4a2c00",
+                    "surface-container-low": "#eef0ff",
+                    "error-dim": "#a70138",
+                    "surface-tint": "#702ae1",
+                    "inverse-primary": "#a476ff",
+                    "outline": "#6f768e",
+                    "surface-dim": "#c7d4fa",
+                    "on-secondary-fixed": "#003853"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #f6f6ff;
+            color: #272e42;
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-header {
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl flex justify-between items-center px-6 h-16 w-full max-w-7xl mx-auto left-1/2 -translate-x-1/2">
+<div class="flex items-center gap-3">
+<span class="text-xl font-extrabold tracking-tight text-violet-700 dark:text-violet-300 font-headline">Tarih Küratörü</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-xl hover:bg-violet-100/50 transition-colors text-slate-500">
+<span class="material-symbols-outlined">history</span>
+</button>
+<button class="p-2 rounded-xl hover:bg-violet-100/50 transition-colors text-slate-500">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-32 px-4 md:px-6 max-w-4xl mx-auto w-full">
+<!-- Progress Indicator -->
+<div class="mb-10 space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<span class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Osmanlı Yükselme Dönemi</span>
+<h1 class="text-3xl font-headline font-extrabold text-on-surface">Soru 1 / 15</h1>
+</div>
+<div class="flex gap-2">
+<div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-error filled-icon">favorite</span>
+<span class="font-label text-sm font-bold">3</span>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-fixed filled-icon">bolt</span>
+<span class="font-label text-sm font-bold">1240</span>
+</div>
+</div>
+</div>
+<!-- Streak Gauge -->
+<div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container transition-all duration-500" style="width: 7.5%"></div>
+</div>
+</div>
+<!-- Question Card -->
+<section class="bg-surface-container-lowest rounded-xl p-8 mb-8 shadow-sm">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-secondary-dim rounded-full mb-6">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+<span class="font-label text-[10px] uppercase font-bold tracking-tighter">Klasik Soru</span>
+</div>
+<p class="text-2xl md:text-3xl font-headline font-bold leading-tight text-on-surface">
+                Aşağıdakilerden hangisi, II. Mehmet (Fatih) döneminde İstanbul'un fethi için yapılan hazırlıklardan biri <span class="text-primary underline decoration-primary-container decoration-4 underline-offset-4">değildir?</span>
+</p>
+</section>
+<!-- Options Bento Grid -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Option A -->
+<button class="group flex items-center text-left p-6 rounded-xl bg-surface-container-lowest hover:bg-primary/5 border-2 border-transparent transition-all duration-200">
+<div class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low group-hover:bg-primary-container text-primary font-label font-bold text-xl mr-6 transition-colors">
+                    A
+                </div>
+<span class="text-lg font-headline font-semibold text-on-surface">Rumeli Hisarı'nın (Boğazkesen) inşa edilmesi</span>
+</button>
+<!-- Option B (Selected State Example) -->
+<button class="group flex items-center text-left p-6 rounded-xl bg-primary/10 border-2 border-primary transition-all duration-200 ring-4 ring-primary/5">
+<div class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary text-on-primary font-label font-bold text-xl mr-6 transition-colors">
+                    B
+                </div>
+<span class="text-lg font-headline font-semibold text-primary">Şahi adı verilen büyük topların döktürülmesi</span>
+<span class="material-symbols-outlined ml-auto text-primary filled-icon">check_circle</span>
+</button>
+<!-- Option C -->
+<button class="group flex items-center text-left p-6 rounded-xl bg-surface-container-lowest hover:bg-primary/5 border-2 border-transparent transition-all duration-200">
+<div class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low group-hover:bg-primary-container text-primary font-label font-bold text-xl mr-6 transition-colors">
+                    C
+                </div>
+<span class="text-lg font-headline font-semibold text-on-surface">Venedik ve Cenevizlilerle barış anlaşmaları yapılması</span>
+</button>
+<!-- Option D -->
+<button class="group flex items-center text-left p-6 rounded-xl bg-surface-container-lowest hover:bg-primary/5 border-2 border-transparent transition-all duration-200">
+<div class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low group-hover:bg-primary-container text-primary font-label font-bold text-xl mr-6 transition-colors">
+                    D
+                </div>
+<span class="text-lg font-headline font-semibold text-on-surface">Anadolu Hisarı'nın (Güzelce Hisar) yaptırılması</span>
+</button>
+</div>
+<!-- Footer Actions -->
+<div class="fixed bottom-0 left-0 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl px-6 py-6 md:px-12 flex items-center justify-between z-50">
+<div class="flex gap-4">
+<button class="w-14 h-14 flex items-center justify-center rounded-xl bg-tertiary-container/10 text-tertiary-fixed hover:bg-tertiary-container/20 transition-all active:scale-95">
+<span class="material-symbols-outlined filled-icon">lightbulb</span>
+</button>
+<button class="w-14 h-14 flex items-center justify-center rounded-xl bg-secondary-container/10 text-secondary hover:bg-secondary-container/20 transition-all active:scale-95">
+<span class="material-symbols-outlined">equalizer</span>
+</button>
+</div>
+<button class="px-10 py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-xl font-headline font-extrabold text-lg flex items-center gap-3 shadow-lg shadow-primary/25 hover:scale-105 active:scale-95 transition-all">
+                Onayla
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Contextual Nav (Hidden on focus, shown via logic) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe-bottom bg-white/90 backdrop-blur-2xl pointer-events-none opacity-0">
+<!-- Hidden for focused question experience as per mandate -->
+</nav>
+</body></html>
