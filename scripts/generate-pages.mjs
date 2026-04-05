@@ -9,6 +9,7 @@ const projectRoot = path.resolve(__dirname, '..');
 const siteUrl = 'https://kpsstarih.com.tr';
 const contactEmail = 'genelkultur46@gmail.com';
 const googleAnalyticsId = 'G-S5QR7PD3ES';
+const googleAdsenseClient = 'ca-pub-9373355317840845';
 
 const topicStyles = [
   { badge: 'T', color: '#f97316', bg: 'rgba(249, 115, 22, 0.12)' },
@@ -245,6 +246,9 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
   const scripts = structuredData
     .map((item) => `<script type="application/ld+json">${JSON.stringify(item)}</script>`)
     .join('\n');
+  const adsenseScript = `
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClient}"
+      crossorigin="anonymous"></script>`;
   const analyticsScript = `
     <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
     <script>
@@ -277,6 +281,7 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/seo.css" />
+    ${adsenseScript}
     ${analyticsScript}
     ${scripts}
   </head>
@@ -995,6 +1000,8 @@ function generateQuizEntry() {
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link rel="canonical" href="${siteUrl}/test/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseClient}"
+      crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
