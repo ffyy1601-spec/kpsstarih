@@ -52,7 +52,7 @@ export const topicCatalog = [
     metaDescription:
       'KPSS Tarih için Osmanlı Kültür ve Medeniyeti özeti, devlet teşkilatı, eğitim, hukuk ve soru çöz sayfası.',
     intro:
-      'Merkez teşkilatı, eğitim kurumları, hukuk sistemi, toprak düzeni ve sosyal yapı Osmanlı kültür medeniyeti konusunun çekirdeğidir.',
+      'Merkez teşkilatı, eğitim kurumları, hukuk sistemi, toprak düzeni ve sosyal yapı Osmanlı kültür ve medeniyeti konusunun çekirdeğini oluşturur.',
     studyFocus: [
       'Divan-ı Hümayun ve merkez teşkilatı',
       'Enderun, medrese ve eğitim sistemi',
@@ -86,7 +86,7 @@ export const topicCatalog = [
     studyFocus: [
       'Samsun, Havza ve Amasya süreci',
       'Erzurum ve Sivas kongreleri',
-      'Temsil Heyeti ve milli teşkilatlanma'
+      'Temsil Heyeti ve millî teşkilatlanma'
     ]
   },
   {

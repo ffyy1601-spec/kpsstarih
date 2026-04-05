@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { kpssData } from '../data/questions';
 
-export default function QuizScreen({ topicId, onBack, onGameOver }) {
+export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
   const isMixed = topicId === 'all';
   const topic = isMixed 
     ? { title: 'Karışık Sorular (Tüm Konular)' } 
@@ -36,6 +36,19 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
   const [audienceData, setAudienceData] = useState(null);
   const [eliminatedOptions, setEliminatedOptions] = useState([]);
   const [activeSecondChance, setActiveSecondChance] = useState(false);
+
+  useEffect(() => {
+    const guardState = { quizGuard: true, topicId };
+    window.history.pushState(guardState, '', window.location.href);
+
+    const handlePopState = () => {
+      setShowExitConfirm(true);
+      window.history.pushState(guardState, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [topicId]);
 
   if (!questions || questions.length === 0) {
     return (
@@ -145,51 +158,61 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </div>
       )}
 
-      <main className="flex-grow h-dvh max-h-dvh overflow-hidden pt-14 pb-3 px-3 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col justify-center">
-        <section className="mb-4 shrink-0 rounded-[28px] border border-white/60 bg-surface-container-lowest/85 p-4 shadow-[0_16px_40px_rgba(148,163,184,0.16)] backdrop-blur-xl">
-          <div className="mb-3 flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="mb-2 inline-flex max-w-full items-center rounded-full bg-secondary-container/45 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-secondary-dim">
-                <span className="truncate">{topic.title}</span>
-              </div>
-              <h1 className="text-[1.9rem] leading-none sm:text-[2.15rem] font-headline font-extrabold tracking-tight text-on-surface">
-                Soru {currentIndex + 1}
-                <span className="ml-2 text-lg font-bold text-on-surface-variant">/ {maxQuestions}</span>
-              </h1>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-2">
-              <div className="flex items-center gap-1 rounded-2xl bg-amber-50 px-3 py-2 text-on-surface shadow-sm">
-                <span className="material-symbols-outlined filled-icon text-[18px] text-amber-500">bolt</span>
-                <span className="font-label text-sm font-extrabold">{currentIndex * 10}</span>
-              </div>
+      <main className="flex-grow h-dvh max-h-dvh overflow-hidden pt-1.5 pb-1.5 px-2 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col justify-start bg-transparent">
+        <section className="mb-1.5 shrink-0 rounded-[20px] border border-white/60 bg-surface-container-lowest/88 p-1.5 sm:p-2 shadow-[0_12px_30px_rgba(148,163,184,0.12)] backdrop-blur-xl">
+          <div className="mb-1 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setShowExitConfirm(true)}
-                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 text-error shadow-sm transition-transform hover:scale-105"
+                className="flex h-8 w-8 items-center justify-center rounded-2xl bg-surface-container-low text-on-surface shadow-sm transition-transform hover:scale-105"
                 aria-label="Çıkış"
               >
-                <span className="material-symbols-outlined text-[19px]">close</span>
+                <span className="material-symbols-outlined text-[17px]">close</span>
               </button>
+
+              <button
+                onClick={onHome}
+                className="flex h-8 w-8 items-center justify-center rounded-2xl bg-surface-container-low text-secondary shadow-sm transition-transform hover:scale-105"
+                aria-label="Ana Sayfa"
+              >
+                <span className="material-symbols-outlined text-[17px]">home</span>
+              </button>
+            </div>
+
+            <div className="min-w-0 flex-1 text-right">
+              <div className="text-[9px] font-black uppercase tracking-[0.22em] text-secondary">Soru {currentIndex + 1} / {maxQuestions}</div>
+              <div className="mt-0.5 truncate text-[0.86rem] sm:text-[0.98rem] font-headline font-extrabold text-on-surface">{topic.title}</div>
             </div>
           </div>
 
-          <div className="mb-4 h-2.5 w-full overflow-hidden rounded-full bg-surface-container-high">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-primary via-primary to-primary-container transition-all duration-500"
-              style={{ width: `${progressPercent}%` }}
-            ></div>
+          <div className="mb-1 flex items-center justify-between gap-2">
+            <div className="inline-flex items-center rounded-full border border-primary/15 bg-primary/5 px-2 py-0.5 text-primary shadow-sm">
+              <span className="font-headline text-[0.82rem] sm:text-[0.95rem] font-extrabold">Skor: {currentIndex * 10}</span>
+            </div>
+            <div className="text-right text-[9px] font-semibold tracking-wide text-on-surface-variant">
+              {isMixed ? 'Karışık Mod' : 'Konu Modu'}
+            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="mb-1 flex gap-1">
+            {questions.map((_, idx) => (
+              <span
+                key={idx}
+                className={`h-1 flex-1 rounded-full ${idx <= currentIndex ? 'bg-primary' : 'bg-surface-container-high'}`}
+              />
+            ))}
+          </div>
+
+          <div className="grid grid-cols-3 gap-1">
           {/* Yarı Yarıya */}
           <button 
             onClick={useFiftyFifty}
             disabled={jokers.fiftyFifty || status === 'locked' || status === 'revealed'}
-            className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-amber-50 text-amber-500 hover:bg-amber-100'}`}
+            className={`flex h-[31px] sm:h-[40px] items-center justify-center rounded-[14px] border transition-all active:scale-95 ${jokers.fiftyFifty ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-amber-50 text-amber-500 border-amber-100 hover:bg-amber-100'}`}
             title="Yarı Yarıya (İki şık eler)"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined filled-icon text-[24px]">lightbulb</span>
+              <span className="material-symbols-outlined text-[17px] sm:text-[19px]">filter_2</span>
               {jokers.fiftyFifty && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
@@ -198,11 +221,11 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
              onClick={useSecondChance}
              disabled={jokers.secondChance || status === 'locked' || status === 'revealed'}
-             className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200')}`}
+             className={`flex h-[31px] sm:h-[40px] items-center justify-center rounded-[14px] border transition-all active:scale-95 ${jokers.secondChance ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : (activeSecondChance ? 'bg-rose-500 text-white border-rose-500' : 'bg-rose-50 text-rose-500 border-rose-100 hover:bg-rose-100')}`}
              title="Çift Cevap (1 Yanlış hakkı)"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined filled-icon text-[24px]">favorite</span>
+              <span className="material-symbols-outlined text-[17px] sm:text-[19px]">exposure_plus_2</span>
               {jokers.secondChance && !activeSecondChance && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
@@ -211,11 +234,11 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
           <button 
             onClick={useSeyirci}
             disabled={jokers.seyirci || status === 'locked' || status === 'revealed'}
-            className={`flex h-14 items-center justify-center rounded-2xl transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-sky-50 text-secondary hover:bg-sky-100'}`}
+            className={`flex h-[31px] sm:h-[40px] items-center justify-center rounded-[14px] border transition-all active:scale-95 ${jokers.seyirci ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-sky-50 text-secondary border-sky-100 hover:bg-sky-100'}`}
             title="Seyirci Jokeri"
           >
             <div className="relative flex items-center justify-center">
-              <span className="material-symbols-outlined text-[24px]">equalizer</span>
+              <span className="material-symbols-outlined text-[17px] sm:text-[19px]">groups_2</span>
               {jokers.seyirci && <span className="absolute text-red-500 font-bold text-lg mix-blend-multiply">X</span>}
             </div>
           </button>
@@ -223,14 +246,14 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </section>
 
         {/* Question Card */}
-        <section className="bg-surface-container-lowest/80 backdrop-blur-xl rounded-2xl p-4 sm:p-5 md:p-8 mb-4 sm:mb-6 shadow-xl shadow-slate-200/50 border border-white/50 relative overflow-hidden shrink-0">
+        <section className="bg-surface-container-lowest/85 backdrop-blur-xl rounded-[22px] p-2.5 sm:p-5 md:p-8 mb-1.5 sm:mb-4 shadow-[0_16px_38px_rgba(148,163,184,0.14)] border border-white/60 relative overflow-hidden shrink-0">
           {/* Soru kartı arkası hafif glow efekti */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mt-10 -mr-10"></div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container text-secondary-dim rounded-full mb-3 sm:mb-4 shadow-sm">
-            <span className="material-symbols-outlined text-[12px]">auto_awesome</span>
-            <span className="font-label text-[10px] md:text-xs uppercase font-bold tracking-widest">Soru Metni</span>
+          <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-container text-secondary-dim rounded-full mb-1 sm:mb-4 shadow-sm">
+            <span className="material-symbols-outlined text-[10px]">auto_awesome</span>
+            <span className="font-label text-[9px] md:text-xs uppercase font-bold tracking-[0.18em]">Soru Metni</span>
           </div>
-          <p className="text-base sm:text-lg md:text-3xl font-headline font-bold leading-snug md:leading-snug text-on-surface min-h-0 max-h-[20dvh] sm:max-h-none overflow-y-auto pr-1 relative z-10">
+          <p className="text-[0.86rem] sm:text-lg md:text-3xl font-headline font-bold leading-snug md:leading-snug text-on-surface min-h-0 max-h-[15dvh] sm:max-h-none overflow-y-auto pr-1 relative z-10">
             {currentQ.questionText.split('değildir?').map((part, i, arr) => 
                i === arr.length - 1 && arr.length > 1 
                  ? <React.Fragment key={i}><span className="text-primary underline decoration-primary-container decoration-4 underline-offset-4">değildir?</span>{part}</React.Fragment>
@@ -240,7 +263,7 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
         </section>
 
         {/* Options Grid (2x2 Structure) */}
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 relative content-start">
+        <div className="grid flex-1 min-h-0 grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-4 relative content-start">
           
           {audienceData && (
              <div className="absolute left-1/2 -translate-x-1/2 -top-12 sm:left-auto sm:right-0 sm:translate-x-0 bg-white p-2 rounded-xl shadow-xl flex gap-3 z-10 border border-slate-100">
@@ -259,9 +282,9 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
             const isEliminated = eliminatedOptions.includes(idx);
             
             // Gizlenen şıkların yapıyı bozmaması için `invisible` yapıyoruz
-            let btnClass = "group min-h-[92px] sm:min-h-[104px] flex items-center text-left px-3 py-3 sm:px-4 sm:py-4 md:py-6 md:px-6 rounded-2xl border-2 transition-all duration-300 shadow-sm hover:shadow-md ";
-            let letterClass = "w-9 h-9 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center rounded-2xl font-headline font-extrabold text-sm sm:text-base md:text-xl mr-3 sm:mr-4 md:mr-5 transition-colors ";
-            let textClass = "text-[12px] sm:text-[13px] md:text-[17px] font-headline font-semibold leading-snug flex-grow ";
+            let btnClass = "group min-h-[56px] sm:min-h-[104px] flex items-center text-left px-2.5 py-2 sm:px-4 sm:py-4 md:py-6 md:px-6 rounded-[18px] border-2 transition-all duration-300 shadow-sm hover:shadow-md ";
+            let letterClass = "w-7 h-7 sm:w-10 sm:h-10 md:w-14 md:h-14 shrink-0 flex items-center justify-center rounded-xl font-headline font-extrabold text-[13px] sm:text-base md:text-xl mr-2 sm:mr-4 md:mr-5 transition-colors ";
+            let textClass = "text-[10px] sm:text-[13px] md:text-[17px] font-headline font-semibold leading-snug flex-grow ";
             let showCheck = false;
             let showCross = false;
 
@@ -295,7 +318,7 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
                  letterClass += "bg-amber-500 text-white";
                  textClass += "text-amber-800";
                } else {
-                 // Selected but not confirmed yet
+                 // Seçilen şık
                  btnClass += "bg-primary/10 border-primary ring-4 ring-primary/5";
                  letterClass += "bg-primary text-white";
                  textClass += "text-primary";
@@ -315,8 +338,8 @@ export default function QuizScreen({ topicId, onBack, onGameOver }) {
               >
                 <div className={letterClass}>{letters[idx]}</div>
                 <span className={textClass}>{opt}</span>
-                {showCheck && <span className="material-symbols-outlined ml-1 text-green-600 filled-icon text-[20px] md:text-[24px]">check_circle</span>}
-                {showCross && <span className="material-symbols-outlined ml-1 text-red-600 filled-icon text-[20px] md:text-[24px]">cancel</span>}
+                {showCheck && <span className="material-symbols-outlined ml-1 text-emerald-300 filled-icon text-[20px] md:text-[24px]">check_circle</span>}
+                {showCross && <span className="material-symbols-outlined ml-1 text-rose-300 filled-icon text-[20px] md:text-[24px]">cancel</span>}
               </button>
             )
           })}

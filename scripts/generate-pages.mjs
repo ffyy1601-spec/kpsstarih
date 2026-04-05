@@ -284,7 +284,7 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="/">
-          <span class="brand-mark">KP</span>
+          <span class="brand-mark"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="44" height="44" /></span>
           <span>KPSS Tarih</span>
         </a>
         <nav class="top-nav" aria-label="Ana menü">
@@ -300,7 +300,7 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
     ${body}
     <footer class="site-footer">
       <div class="container footer-box">
-        <div>KPSS Tarih için konu bazlı çalışma, mobil uyumlu soru çöz ve güven veren statik sayfa yapısı.</div>
+        <div>KPSS Tarih hazırlığında konu tekrarı, soru pratiği ve hızlı erişim için yanınızdayız.</div>
         <div class="footer-links">
           <a href="/konular/">Konular</a>
           <a href="/test/">Soru Çöz</a>
@@ -321,7 +321,6 @@ function renderTopicCard(topic, index) {
     <article class="topic-card">
       <div class="topic-icon" style="background:${style.bg}; color:${style.color};">${style.badge}</div>
       <h3>${escapeHtml(topic.title)}</h3>
-      <p>${escapeHtml(topic.intro)}</p>
       <div class="card-actions">
         <a class="button" href="/test/?topic=${topic.id}">Hemen Başla</a>
       </div>
@@ -429,14 +428,15 @@ function generateHomePage() {
       <section class="hero-shell">
         <div class="container hero-center">
           <div class="hero-main">
-            <div class="icon-box"><div class="icon-mark">⌘</div></div>
-            <h1>KPSS Tarih <span class="gradient-text">Soru Çözümü</span></h1>
-            <p class="lead">Geçmişin bilgisiyle geleceğini inşa et. En güncel müfredatla hazırlanan binlerce soruyla sınav yolculuğunda yanındayız.</p>
+            <div class="hero-kicker">Hızlı tekrar, net pratik</div>
+            <div class="icon-box"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="96" height="92" /></div>
+            <h1>KPSS Tarih <span class="gradient-text">Soru Çöz</span></h1>
+            <p class="lead">Konu konu ilerle, çıkan kalıpları gör ve sınava daha güvenli hazırlan.</p>
             <div class="hero-actions">
               <a class="cta-button" href="/konular/">Teste Başla</a>
-              <a class="button-secondary" href="#seo-icerik">Rehberi İncele</a>
+              <a class="hero-link" href="#seo-icerik">Rehberi İncele</a>
             </div>
-            <p class="hero-note">Aşağıda çalışma rehberi, konu sırası ve sık sorulan sorular yer alır.</p>
+            <p class="hero-note">Konu sırası, çalışma rehberi ve sık sorulanlar hemen aşağıda.</p>
             <div class="stats-grid">
               <article class="stat-card">
                 <div class="stat-badge">?</div>
@@ -579,10 +579,6 @@ function generateTopicsPage() {
   const body = `
     <main class="page-shell">
       <div class="container page-center">
-        <div class="topic-page-hero">
-          <h1>Hazır Mısın?</h1>
-          <p class="lead">Çözmek istediğin tarih konusunu seç.</p>
-        </div>
         ${mixedCard}
         <section class="section">
           <div class="topic-grid">
@@ -746,7 +742,7 @@ function renderSimplePage({ pathName, title, description, eyebrow, intro, cards 
       <div class="container page-center">
         <div class="breadcrumbs"><a href="/">Ana Sayfa</a><span>/</span><span>${escapeHtml(title)}</span></div>
         <div class="hero-main" style="max-width:980px;">
-          <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><div class="icon-mark">•</div></div>
+          <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="88" height="88" /></div>
           <div class="eyebrow">${escapeHtml(eyebrow)}</div>
           <h1>${escapeHtml(title)}</h1>
           <p class="lead">${escapeHtml(intro)}</p>
@@ -837,7 +833,7 @@ function generatePrivacyPage() {
       <div class="container page-center">
         <div class="breadcrumbs"><a href="/">Ana Sayfa</a><span>/</span><span>Gizlilik Politikası</span></div>
         <div class="hero-main" style="max-width:980px;">
-          <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><div class="icon-mark">•</div></div>
+          <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="88" height="88" /></div>
           <div class="eyebrow">Şeffaflık ve güven</div>
           <h1>Gizlilik Politikası</h1>
           <p class="lead">Bu sayfa, KPSS Tarih sitesini ziyaret eden kullanıcıları temel gizlilik yaklaşımı hakkında açık ve sade biçimde bilgilendirmek için hazırlanmıştır.</p>
@@ -845,9 +841,10 @@ function generatePrivacyPage() {
         <section class="section">
           <article class="legal-card">
             <ol class="legal-list">
-              <li>Site eğitim ve içerik erişimi amacıyla yayın yapar. Teknik erişim sırasında temel sistem kayıtları oluşabilir.</li>
-              <li>İletişim e-postası üzerinden gönderilen mesajlar yalnızca geri dönüş yapmak, önerileri değerlendirmek veya teknik sorunları incelemek amacıyla kullanılır.</li>
-              <li>İleride analiz, reklam veya üçüncü taraf servisler eklenirse bu politika güncellenerek kullanıcıya açık biçimde sunulur.</li>
+              <li>Site, eğitim amaçlı içerik ve soru çöz deneyimi sunar. Ziyaret sırasında temel teknik kayıtlar ve performans verileri oluşabilir.</li>
+              <li>Google Analytics, site performansını ve kullanım akışını anlamak amacıyla kullanılabilir. Bu veriler kişisel kimlik tespiti amacıyla değil, hizmet kalitesini iyileştirmek için değerlendirilir.</li>
+              <li>İletişim e-postası üzerinden gönderilen mesajlar yalnızca geri dönüş yapmak, önerileri değerlendirmek veya teknik sorunları incelemek amacıyla işlenir.</li>
+              <li>İleride reklam veya ek üçüncü taraf servisler kullanıma alınırsa bu politika güncellenerek kullanıcıya açık biçimde duyurulur.</li>
               <li>Gizlilik konusunda soru veya talep iletmek için şu adres kullanılabilir: <a href="mailto:${contactEmail}">${contactEmail}</a>.</li>
             </ol>
           </article>
@@ -885,8 +882,8 @@ function generateIntentPages() {
       <main class="page-shell">
         <div class="container page-center">
           <div class="breadcrumbs"><a href="/">Ana Sayfa</a><span>/</span><span>${escapeHtml(page.title)}</span></div>
-          <div class="hero-main" style="max-width:980px;">
-            <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><div class="icon-mark">⌘</div></div>
+            <div class="hero-main" style="max-width:980px;">
+              <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="88" height="88" /></div>
             <div class="eyebrow">Arama niyeti odaklı sayfa</div>
             <h1>${escapeHtml(page.headline)}</h1>
             <p class="lead">${escapeHtml(page.intro)}</p>

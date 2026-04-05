@@ -95,10 +95,15 @@ function App() {
     <>
       {currentScreen === 'landing' && <LandingScreen onStart={startGame} />}
       {currentScreen === 'topics' && (
-        <TopicSelectionScreen onSelectTopic={selectTopic} onBack={goBackToLanding} />
+        <TopicSelectionScreen onSelectTopic={selectTopic} onHome={handleHome} />
       )}
       {currentScreen === 'quiz' && (
-        <QuizScreen topicId={selectedTopicId} onBack={handleQuizBack} onGameOver={handleGameOver} />
+        <QuizScreen
+          topicId={selectedTopicId}
+          onBack={handleQuizBack}
+          onHome={handleHome}
+          onGameOver={handleGameOver}
+        />
       )}
       {currentScreen === 'gameover' && (
         <GameOverScreen result={gameResult} onRestart={handleRestart} onHome={handleHome} />
