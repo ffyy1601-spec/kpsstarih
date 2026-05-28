@@ -598,8 +598,10 @@ function generateHomePage() {
           <div class="daily-topics-grid">
             ${articleManifest.articles.slice(0, 3).map(article => `
               <article class="article-card">
-                <div class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</div>
-                <div class="article-card-date">${formatDate(article.createdAt)}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px; flex-wrap:wrap; gap:8px;">
+                  <span class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</span>
+                  <span class="article-card-date">${formatDate(article.createdAt)}</span>
+                </div>
                 <h3>${escapeHtml(article.title)}</h3>
                 <p>${escapeHtml(article.summary)}</p>
                 <a class="article-read-link" href="/icerik/${article.slug}/">Devamını oku →</a>
@@ -1227,61 +1229,180 @@ function generateArticlePages() {
     const quizScript = `
 <script>
 (function() {
-  var answers = ${JSON.stringify(article.questions.map(q => q.answer))};
-  var selected = new Array(answers.length).fill(null);
-  var checked = false;
+  var questions = ${JSON.stringify(article.questions)};
+  var currentIndex = 0;
+  var correctCount = 0;
+  var status = 'idle';
 
-  document.querySelectorAll('.quiz-option').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (checked) return;
-      var qi = parseInt(this.dataset.question);
-      var letter = this.dataset.letter;
-      selected[qi] = letter;
-      var siblings = document.querySelectorAll('[data-question="' + qi + '"]');
-      siblings.forEach(function(s) { s.classList.remove('selected'); });
-      this.classList.add('selected');
-    });
-  });
+  var startBtn = document.getElementById('start-quiz-btn');
+  var articleHeader = document.getElementById('article-header');
+  var articleBody = document.getElementById('article-body');
+  var triggerWrapper = document.getElementById('quiz-trigger-wrapper');
+  
+  var quizArea = document.getElementById('article-quiz');
+  var progressText = document.getElementById('quiz-progress-text');
+  var correctCountText = document.getElementById('quiz-correct-count');
+  var progressFill = document.getElementById('quiz-progress-fill');
+  var questionContainer = document.getElementById('quiz-question-container');
+  var nextBtn = document.getElementById('quiz-next-btn');
+  var backToArticleBtn = document.getElementById('quiz-back-to-article-btn');
+  
+  var resultCard = document.getElementById('quiz-result-card');
+  var resultIcon = document.getElementById('quiz-result-icon');
+  var resultTitle = document.getElementById('quiz-result-title');
+  var resultDesc = document.getElementById('quiz-result-desc');
+  var finalScoreText = document.getElementById('quiz-final-score');
+  var finalCorrectText = document.getElementById('quiz-final-correct');
+  var finalWrongText = document.getElementById('quiz-final-wrong');
+  var restartBtn = document.getElementById('quiz-restart-btn');
+  var resultReadArticleBtn = document.getElementById('quiz-result-read-article-btn');
 
-  document.getElementById('quiz-check-btn').addEventListener('click', function() {
-    if (checked) return;
-    checked = true;
-    var correct = 0;
-    for (var i = 0; i < answers.length; i++) {
-      var opts = document.querySelectorAll('[data-question="' + i + '"]');
-      opts.forEach(function(o) {
-        o.classList.add('disabled');
-        if (o.dataset.letter === answers[i]) {
-          o.classList.add('correct');
-        } else if (o.dataset.letter === selected[i] && selected[i] !== answers[i]) {
-          o.classList.add('incorrect');
-        }
-      });
-      if (selected[i] === answers[i]) correct++;
+  function showArticle() {
+    articleHeader.style.display = 'block';
+    articleBody.style.display = 'block';
+    triggerWrapper.style.display = 'block';
+    quizArea.style.display = 'none';
+    resultCard.style.display = 'none';
+    window.scrollTo({ top: articleHeader.offsetTop - 100, behavior: 'smooth' });
+  }
+
+  function startQuiz() {
+    articleHeader.style.display = 'none';
+    articleBody.style.display = 'none';
+    triggerWrapper.style.display = 'none';
+    quizArea.style.display = 'block';
+    resultCard.style.display = 'none';
+    currentIndex = 0;
+    correctCount = 0;
+    status = 'idle';
+    nextBtn.style.display = 'none';
+    renderQuestion();
+    window.scrollTo({ top: quizArea.offsetTop - 100, behavior: 'smooth' });
+  }
+
+  function renderQuestion() {
+    if (currentIndex >= questions.length) {
+      showResult();
+      return;
     }
-    var score = Math.round((correct / answers.length) * 100);
-    var resultEl = document.getElementById('quiz-result');
-    resultEl.style.display = 'block';
-    document.getElementById('quiz-score').textContent = score + '/100';
-    document.getElementById('quiz-detail').textContent = correct + ' doğru, ' + (answers.length - correct) + ' yanlış';
-    this.style.display = 'none';
-  });
+    
+    var q = questions[currentIndex];
+    
+    // Update progress
+    progressText.textContent = 'Soru ' + (currentIndex + 1) + ' / ' + questions.length;
+    correctCountText.textContent = 'Doğru: ' + correctCount;
+    var progressPercent = ((currentIndex + 1) / questions.length) * 100;
+    progressFill.style.width = progressPercent + '%';
+
+    // Render HTML
+    var optionsHtml = q.options.map(function(opt) {
+      var letter = opt.trim().charAt(0); // e.g. "A"
+      var cleanOpt = opt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      var optTextOnly = cleanOpt.substring(3); // Remove "A) "
+      return '<div class="quiz-option" data-letter="' + letter + '">' +
+               '<span class="quiz-option-letter">' + letter + '</span>' +
+               '<span class="quiz-option-text">' + optTextOnly + '</span>' +
+             '</div>';
+    }).join('');
+
+    var cleanQuestionText = q.question.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    
+    // Check if the question text contains "değildir?" and style it appropriately
+    if (cleanQuestionText.indexOf('değildir?') !== -1) {
+      cleanQuestionText = cleanQuestionText.replace('değildir?', '<span style="color:var(--primary); text-decoration: underline; text-decoration-color: var(--primary); text-decoration-thickness: 3px; underline-offset: 4px;">değildir?</span>');
+    }
+
+    questionContainer.innerHTML = 
+      '<div class="quiz-question">' +
+        '<div class="quiz-question-text">' + cleanQuestionText + '</div>' +
+        '<div class="quiz-options">' + optionsHtml + '</div>' +
+      '</div>';
+
+    // Event listeners for options
+    var optionEls = questionContainer.querySelectorAll('.quiz-option');
+    optionEls.forEach(function(el) {
+      el.addEventListener('click', function() {
+        if (status !== 'idle') return;
+        var letter = this.dataset.letter;
+        selectOption(letter, el);
+      });
+    });
+  }
+
+  function selectOption(letter, el) {
+    status = 'locked';
+    var q = questions[currentIndex];
+    var isCorrect = (letter === q.answer);
+    
+    var optionEls = questionContainer.querySelectorAll('.quiz-option');
+    optionEls.forEach(function(optEl) {
+      optEl.classList.add('disabled');
+      var optLetter = optEl.dataset.letter;
+      if (optLetter === q.answer) {
+        optEl.classList.add('correct');
+        optEl.insertAdjacentHTML('beforeend', '<span class="quiz-option-status-icon">✓</span>');
+      } else if (optLetter === letter) {
+        optEl.classList.add('incorrect');
+        optEl.insertAdjacentHTML('beforeend', '<span class="quiz-option-status-icon">✗</span>');
+      }
+    });
+
+    if (isCorrect) {
+      correctCount++;
+      correctCountText.textContent = 'Doğru: ' + correctCount;
+    }
+
+    nextBtn.style.display = 'inline-flex';
+    nextBtn.textContent = (currentIndex === questions.length - 1) ? 'Sonuçları Gör' : 'Sonraki Soru';
+  }
+
+  function nextQuestion() {
+    currentIndex++;
+    status = 'idle';
+    nextBtn.style.display = 'none';
+    if (currentIndex < questions.length) {
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    quizArea.style.display = 'none';
+    resultCard.style.display = 'block';
+    
+    var score = Math.round((correctCount / questions.length) * 100);
+    var wrongCount = questions.length - correctCount;
+
+    finalScoreText.textContent = score + ' / 100';
+    finalCorrectText.textContent = correctCount;
+    finalWrongText.textContent = wrongCount;
+
+    if (score >= 85) {
+      resultIcon.textContent = '🏆';
+      resultTitle.textContent = 'Mükemmel Başarı!';
+      resultDesc.textContent = 'Konuya son derece hakimsiniz. Harika bir derece!';
+    } else if (score >= 50) {
+      resultIcon.textContent = '👍';
+      resultTitle.textContent = 'Güzel Deneme!';
+      resultDesc.textContent = 'Konuya oldukça aşinasınız, eksikleri kapatarak daha yüksek puan alabilirsiniz.';
+    } else {
+      resultIcon.textContent = '📚';
+      resultTitle.textContent = 'Daha Çok Çalışmalısın!';
+      resultDesc.textContent = 'Konu tekrarlarını artırıp daha fazla test çözmek netlerinizi yükseltecektir.';
+    }
+    
+    window.scrollTo({ top: resultCard.offsetTop - 100, behavior: 'smooth' });
+  }
+
+  // Bind events
+  startBtn.addEventListener('click', startQuiz);
+  backToArticleBtn.addEventListener('click', showArticle);
+  nextBtn.addEventListener('click', nextQuestion);
+  restartBtn.addEventListener('click', startQuiz);
+  resultReadArticleBtn.addEventListener('click', showArticle);
 })();
 </script>`;
-
-    const questionsHtml = article.questions.map((q, qi) => `
-      <div class="quiz-question">
-        <div class="quiz-question-text">
-          <span class="quiz-question-number">${qi + 1}</span>${escapeHtml(q.question)}
-        </div>
-        <div class="quiz-options">
-          ${q.options.map(opt => {
-            const letter = opt.charAt(0);
-            return `<div class="quiz-option" data-question="${qi}" data-letter="${letter}">${escapeHtml(opt)}</div>`;
-          }).join('')}
-        </div>
-      </div>
-    `).join('');
 
     const keywordsHtml = (article.keywords || []).map(k =>
       `<span class="article-keyword">${escapeHtml(k)}</span>`
@@ -1320,7 +1441,7 @@ function generateArticlePages() {
             <a href="/">Ana Sayfa</a><span>/</span><a href="/icerik/">Günün Konusu</a><span>/</span><span>${escapeHtml(article.title)}</span>
           </div>
 
-          <div class="article-header">
+          <div class="article-header" id="article-header">
             <div class="article-meta">
               <span class="article-topic-badge">${escapeHtml(topicTitle)}</span>
               <span class="article-date">${dateStr}</span>
@@ -1329,20 +1450,64 @@ function generateArticlePages() {
             <p class="article-summary">${escapeHtml(article.summary)}</p>
           </div>
 
-          <div class="article-body">
+          <div class="article-body" id="article-body">
             ${article.content}
             ${keywordsHtml ? `<div class="article-keywords">${keywordsHtml}</div>` : ''}
           </div>
 
-          <div class="article-quiz">
-            <h2>📝 Konuyu Test Et</h2>
-            ${questionsHtml}
-            <div style="text-align:center;">
-              <button class="quiz-check-btn" id="quiz-check-btn">Cevapları Kontrol Et</button>
+          <!-- Start Test Panel -->
+          <div class="article-quiz-trigger-wrapper" id="quiz-trigger-wrapper" style="text-align:center; margin: 36px 0;">
+            <button class="quiz-check-btn" id="start-quiz-btn" style="font-size: 1.15rem; padding: 14px 44px; border-radius: 18px;">📝 Teste Başla</button>
+          </div>
+
+          <!-- Step-by-step Quiz Area -->
+          <div class="article-quiz" id="article-quiz" style="display:none; max-width:820px; margin: 0 auto 36px;">
+            <div class="quiz-progress-bar-wrapper" style="margin-bottom: 24px;">
+              <div class="quiz-progress-meta" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <span id="quiz-progress-text" style="font-weight: 800; font-size: 0.9rem; color: var(--primary);">Soru 1 / 10</span>
+                <span id="quiz-correct-count" style="font-weight: 800; font-size: 0.9rem; color: #16a34a;">Doğru: 0</span>
+              </div>
+              <div class="quiz-progress-track" style="height: 6px; background: rgba(111, 42, 225, 0.1); border-radius: 99px; overflow: hidden;">
+                <div id="quiz-progress-fill" style="height: 100%; width: 10%; background: var(--primary); transition: width 0.3s ease;"></div>
+              </div>
             </div>
-            <div class="quiz-result" id="quiz-result" style="display:none;">
-              <div class="quiz-result-score" id="quiz-score"></div>
-              <div class="quiz-result-text" id="quiz-detail"></div>
+
+            <!-- Single Question Container -->
+            <div id="quiz-question-container">
+              <!-- Loaded via JavaScript -->
+            </div>
+            
+            <div class="quiz-actions" style="margin-top:28px; display:flex; justify-content:space-between; gap: 16px;">
+              <button class="button-secondary" id="quiz-back-to-article-btn" style="flex:1; min-height: 48px; border-radius: 14px; margin-top:0;">Konuyu Oku</button>
+              <button class="quiz-check-btn" id="quiz-next-btn" style="flex:1; margin-top:0; min-height: 48px; border-radius: 14px; display:none;">Sonraki Soru</button>
+            </div>
+          </div>
+
+          <!-- Quiz Result Panel (Game Over Screen) -->
+          <div class="article-quiz" id="quiz-result-card" style="display:none; max-width:620px; margin: 0 auto 36px; text-align:center; padding: 40px 30px;">
+            <div class="quiz-result-icon" id="quiz-result-icon" style="margin-bottom:20px; font-size: 4rem;">🏆</div>
+            <h2 id="quiz-result-title" style="font-size:2rem; font-weight:800; margin-bottom:12px;">Mükemmel Başarı!</h2>
+            <p id="quiz-result-desc" style="color:var(--muted); margin-bottom:28px; font-size:1.05rem; line-height: 1.5;"></p>
+            
+            <div class="quiz-score-display" style="background: rgba(111, 42, 225, 0.04); padding: 24px; border-radius: 18px; margin-bottom: 24px; border-bottom: 4px solid rgba(111, 42, 225, 0.15);">
+              <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--primary); font-weight:800; margin-bottom:6px;">Başarı Puanı</div>
+              <div id="quiz-final-score" style="font-size:2.8rem; font-weight:900; color:var(--text);">90 / 100</div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+              <div style="background: rgba(34, 197, 94, 0.04); padding: 16px; border-radius: 16px; border-bottom: 3px solid rgba(34, 197, 94, 0.15); text-align: center;">
+                <div style="font-size:0.78rem; color:#16a34a; font-weight:800; text-transform: uppercase; tracking: 0.05em; margin-bottom: 4px;">Doğru</div>
+                <div id="quiz-final-correct" style="font-size:1.8rem; font-weight:900; color:#15803d;">9</div>
+              </div>
+              <div style="background: rgba(239, 68, 68, 0.04); padding: 16px; border-radius: 16px; border-bottom: 3px solid rgba(239, 68, 68, 0.15); text-align: center;">
+                <div style="font-size:0.78rem; color:#ef4444; font-weight:800; text-transform: uppercase; tracking: 0.05em; margin-bottom: 4px;">Yanlış</div>
+                <div id="quiz-final-wrong" style="font-size:1.8rem; font-weight:900; color:#b91c1c;">1</div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <button class="quiz-check-btn" id="quiz-restart-btn" style="margin-top:0; width:100%; min-height:52px; border-radius:16px;">Hemen Yeniden Çöz</button>
+              <button class="button-secondary" id="quiz-result-read-article-btn" style="width:100%; min-height:52px; border-radius:16px; margin-top:0;">Konuyu Tekrar Oku</button>
             </div>
           </div>
 
@@ -1424,8 +1589,10 @@ function generateArticleListPage() {
 
   const articlesHtml = articleManifest.articles.map(article => `
     <article class="article-card">
-      <div class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</div>
-      <div class="article-card-date">${formatDate(article.createdAt)}</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px; flex-wrap:wrap; gap:8px;">
+        <span class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</span>
+        <span class="article-card-date">${formatDate(article.createdAt)}</span>
+      </div>
       <h3>${escapeHtml(article.title)}</h3>
       <p>${escapeHtml(article.summary)}</p>
       <a class="article-read-link" href="/icerik/${article.slug}/">Devamını oku →</a>
