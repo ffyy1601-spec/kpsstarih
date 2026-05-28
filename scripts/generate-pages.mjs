@@ -356,7 +356,7 @@ function renderTopicCard(topic, index) {
   const style = topicStyles[index % topicStyles.length];
 
   return `
-    <article class="topic-card">
+    <article class="topic-card" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(6, 14, 32, 0.82) 100%), url('/images/${topic.id}.webp')">
       <div class="topic-icon" style="background:${style.bg}; color:${style.color};">${style.badge}</div>
       <h3>${escapeHtml(topic.title)}</h3>
       <div class="card-actions">

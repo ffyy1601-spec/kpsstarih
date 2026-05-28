@@ -338,7 +338,6 @@ h3 {
 }
 
 .stat-card,
-.topic-card,
 .section-card,
 .content-card,
 .legal-card,
@@ -486,12 +485,14 @@ h3 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 300ms ease, box-shadow 300ms ease;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(6, 14, 32, 0.15);
 }
 
 .topic-card:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
   box-shadow: 0 20px 40px rgba(111, 42, 225, 0.22);
 }
 
