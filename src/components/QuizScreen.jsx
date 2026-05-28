@@ -11,9 +11,9 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
   const [questions] = useState(() => {
     if (isMixed) {
       const allQ = kpssData.flatMap((t) => t.questions || []);
-      return shuffleQuestions(allQ).slice(0, 20);
+      return shuffleQuestions(allQ).slice(0, 15);
     }
-    return topic ? shuffleQuestions(topic.questions || []) : [];
+    return topic ? shuffleQuestions(topic.questions || []).slice(0, 15) : [];
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,6 +28,7 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
   const [audienceData, setAudienceData] = useState(null);
   const [eliminatedOptions, setEliminatedOptions] = useState([]);
   const [activeSecondChance, setActiveSecondChance] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   useEffect(() => {
     const guardState = { quizGuard: true, topicId };
@@ -66,6 +67,10 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
       setStatus('revealed');
       const isCorrect = index === currentQ.correctAnswerIndex;
 
+      if (isCorrect) {
+        setCorrectAnswersCount((prev) => prev + 1);
+      }
+
       setTimeout(() => {
         if (isCorrect) {
           if (currentIndex + 1 < questions.length) {
@@ -75,7 +80,7 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
             setEliminatedOptions([]);
             setActiveSecondChance(false);
           } else {
-            onGameOver({ score: currentIndex + 1, total: questions.length, win: true });
+            onGameOver({ correctCount: correctAnswersCount + 1, total: questions.length });
           }
         } else if (activeSecondChance) {
           setEliminatedOptions((prev) => [...prev, index]);
@@ -83,12 +88,15 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
           setStatus('idle');
           setSelectedOption(null);
         } else {
-          onGameOver({
-            score: currentIndex,
-            total: questions.length,
-            win: false,
-            correctAnswer: currentQ.options[currentQ.correctAnswerIndex]
-          });
+          if (currentIndex + 1 < questions.length) {
+            setCurrentIndex((prev) => prev + 1);
+            setSelectedOption(null);
+            setStatus('idle');
+            setEliminatedOptions([]);
+            setActiveSecondChance(false);
+          } else {
+            onGameOver({ correctCount: correctAnswersCount, total: questions.length });
+          }
         }
       }, 2000);
     }, 2000);
@@ -190,7 +198,7 @@ export default function QuizScreen({ topicId, onBack, onHome, onGameOver }) {
 
           <div className="mb-1 flex items-center justify-between gap-2">
             <div className="inline-flex items-center rounded-full border border-primary/15 bg-primary/5 px-2 py-0.5 text-primary shadow-sm">
-              <span className="font-headline text-[0.82rem] sm:text-[0.95rem] font-extrabold">Skor: {currentIndex * 10}</span>
+              <span className="font-headline text-[0.82rem] sm:text-[0.95rem] font-extrabold">Doğru: {correctAnswersCount}</span>
             </div>
             <div className="text-right text-[9px] font-semibold tracking-wide text-on-surface-variant">
               {isMixed ? 'Karışık Mod' : 'Konu Modu'}

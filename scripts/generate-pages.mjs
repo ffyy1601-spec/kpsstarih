@@ -6,6 +6,40 @@ import { topicCatalog } from '../src/data/topicCatalog.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
+
+/* ------------------------------------------------------------------ */
+/*  Makale manifest'ini yükle                                          */
+/* ------------------------------------------------------------------ */
+const ARTICLES_DIR = path.join(projectRoot, 'src', 'data', 'articles');
+const MANIFEST_PATH = path.join(ARTICLES_DIR, 'manifest.json');
+
+function loadArticleManifest() {
+  if (!fs.existsSync(MANIFEST_PATH)) return { articles: [] };
+  try {
+    return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+  } catch { return { articles: [] }; }
+}
+
+function loadArticleData(articleId) {
+  const filePath = path.join(ARTICLES_DIR, `${articleId}.json`);
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch { return null; }
+}
+
+const articleManifest = loadArticleManifest();
+
+function formatDate(isoString) {
+  const d = new Date(isoString);
+  const months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function getTopicTitle(topicId) {
+  const topic = topicCatalog.find(t => t.id === topicId);
+  return topic ? topic.shortTitle : topicId;
+}
 const siteUrl = 'https://kpsstarih.com.tr';
 const contactEmail = 'genelkultur46@gmail.com';
 const googleAnalyticsId = 'G-S5QR7PD3ES';
@@ -296,9 +330,7 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
           <a href="/">Ana Sayfa</a>
           <a href="/konular/">Konular</a>
           <a href="/test/">Soru Çöz</a>
-          <a href="/hakkimizda/">Hakkımızda</a>
-          <a href="/iletisim/">İletişim</a>
-          <a href="/gizlilik/">Gizlilik</a>
+          <a href="/icerik/">Günün Konusu</a>
         </nav>
       </div>
     </header>
@@ -309,6 +341,7 @@ function pageLayout({ title, description, canonicalPath, body, structuredData = 
         <div class="footer-links">
           <a href="/konular/">Konular</a>
           <a href="/test/">Soru Çöz</a>
+          <a href="/icerik/">Günün Konusu</a>
           <a href="/hakkimizda/">Hakkımızda</a>
           <a href="/iletisim/">İletişim</a>
           <a href="/gizlilik/">Gizlilik</a>
@@ -439,7 +472,7 @@ function generateHomePage() {
             <p class="lead">Konu konu ilerle, çıkan kalıpları gör ve sınava daha güvenli hazırlan.</p>
             <div class="hero-actions">
               <a class="cta-button" href="/konular/">Teste Başla</a>
-              <a class="hero-link" href="#seo-icerik">Rehberi İncele</a>
+              <a class="hero-link" href="/icerik/">Günün Konuları</a>
             </div>
             <p class="hero-note">Konu sırası, çalışma rehberi ve sık sorulanlar hemen aşağıda.</p>
             <div class="stats-grid">
@@ -553,6 +586,34 @@ function generateHomePage() {
           </div>
         </div>
       </section>
+
+      ${articleManifest.articles.length > 0 ? `
+      <section class="daily-topics">
+        <div class="container section-stack">
+          <div class="section-intro">
+            <div class="eyebrow">📚 Günün Konusu</div>
+            <h2>Her gün yeni bir KPSS Tarih içeriği ve mini quiz</h2>
+            <p>Gemini AI ile üretilen güncel içerikler, konu tekrarı ve soru pratiği için güçlü bir kaynak sunar.</p>
+          </div>
+          <div class="daily-topics-grid">
+            ${articleManifest.articles.slice(0, 3).map(article => `
+              <article class="article-card">
+                <div class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</div>
+                <div class="article-card-date">${formatDate(article.createdAt)}</div>
+                <h3>${escapeHtml(article.title)}</h3>
+                <p>${escapeHtml(article.summary)}</p>
+                <a class="article-read-link" href="/icerik/${article.slug}/">Devamını oku →</a>
+              </article>
+            `).join('')}
+          </div>
+          ${articleManifest.articles.length > 3 ? `
+            <div class="daily-topics-cta">
+              <a class="button-secondary" href="/icerik/" style="border-radius:16px;">Tüm İçerikleri Gör</a>
+            </div>
+          ` : ''}
+        </div>
+      </section>
+      ` : ''}
     </main>`;
 
   writeFile(
@@ -1094,23 +1155,44 @@ function generateQuizEntry() {
 }
 
 function generateSitemapAndRobots() {
-  const urls = [
-    '/',
-    '/konular/',
-    '/test/',
-    '/hakkimizda/',
-    '/iletisim/',
-    '/gizlilik/',
-    ...intentPages.map((page) => `/${page.slug}/`),
-    ...topicCatalog.map((topic) => `/konular/${topic.slug}/`)
+  const today = new Date().toISOString().split('T')[0];
+
+  const staticUrls = [
+    { loc: '/', changefreq: 'daily', priority: '1.0', lastmod: today },
+    { loc: '/konular/', changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { loc: '/test/', changefreq: 'weekly', priority: '0.9', lastmod: today },
+    { loc: '/icerik/', changefreq: 'daily', priority: '0.8', lastmod: today },
+    { loc: '/hakkimizda/', changefreq: 'monthly', priority: '0.4' },
+    { loc: '/iletisim/', changefreq: 'monthly', priority: '0.4' },
+    { loc: '/gizlilik/', changefreq: 'monthly', priority: '0.3' },
+    ...intentPages.map((page) => ({
+      loc: `/${page.slug}/`,
+      changefreq: 'monthly',
+      priority: '0.7'
+    })),
+    ...topicCatalog.map((topic) => ({
+      loc: `/konular/${topic.slug}/`,
+      changefreq: 'weekly',
+      priority: '0.8'
+    }))
   ];
+
+  // Makale URL'leri
+  const articleUrls = articleManifest.articles.map(article => ({
+    loc: `/icerik/${article.slug}/`,
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: article.createdAt ? article.createdAt.split('T')[0] : today
+  }));
+
+  const allUrls = [...staticUrls, ...articleUrls];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
+${allUrls
   .map(
-    (url) => `  <url>
-    <loc>${siteUrl}${url}</loc>
+    (entry) => `  <url>
+    <loc>${siteUrl}${entry.loc}</loc>${entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : ''}${entry.changefreq ? `\n    <changefreq>${entry.changefreq}</changefreq>` : ''}${entry.priority ? `\n    <priority>${entry.priority}</priority>` : ''}
   </url>`
   )
   .join('\n')}
@@ -1127,6 +1209,268 @@ Sitemap: ${siteUrl}/sitemap.xml
   writeFile('public/robots.txt', robots);
 }
 
+/* ================================================================== */
+/*  Makale Sayfaları                                                   */
+/* ================================================================== */
+
+function generateArticlePages() {
+  if (articleManifest.articles.length === 0) return;
+
+  articleManifest.articles.forEach((articleMeta) => {
+    const article = loadArticleData(articleMeta.id);
+    if (!article) return;
+
+    const topicTitle = getTopicTitle(article.topicId);
+    const dateStr = formatDate(article.createdAt);
+
+    // Quiz JS (vanilla, self-contained)
+    const quizScript = `
+<script>
+(function() {
+  var answers = ${JSON.stringify(article.questions.map(q => q.answer))};
+  var selected = new Array(answers.length).fill(null);
+  var checked = false;
+
+  document.querySelectorAll('.quiz-option').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (checked) return;
+      var qi = parseInt(this.dataset.question);
+      var letter = this.dataset.letter;
+      selected[qi] = letter;
+      var siblings = document.querySelectorAll('[data-question="' + qi + '"]');
+      siblings.forEach(function(s) { s.classList.remove('selected'); });
+      this.classList.add('selected');
+    });
+  });
+
+  document.getElementById('quiz-check-btn').addEventListener('click', function() {
+    if (checked) return;
+    checked = true;
+    var correct = 0;
+    for (var i = 0; i < answers.length; i++) {
+      var opts = document.querySelectorAll('[data-question="' + i + '"]');
+      opts.forEach(function(o) {
+        o.classList.add('disabled');
+        if (o.dataset.letter === answers[i]) {
+          o.classList.add('correct');
+        } else if (o.dataset.letter === selected[i] && selected[i] !== answers[i]) {
+          o.classList.add('incorrect');
+        }
+      });
+      if (selected[i] === answers[i]) correct++;
+    }
+    var score = Math.round((correct / answers.length) * 100);
+    var resultEl = document.getElementById('quiz-result');
+    resultEl.style.display = 'block';
+    document.getElementById('quiz-score').textContent = score + '/100';
+    document.getElementById('quiz-detail').textContent = correct + ' doğru, ' + (answers.length - correct) + ' yanlış';
+    this.style.display = 'none';
+  });
+})();
+</script>`;
+
+    const questionsHtml = article.questions.map((q, qi) => `
+      <div class="quiz-question">
+        <div class="quiz-question-text">
+          <span class="quiz-question-number">${qi + 1}</span>${escapeHtml(q.question)}
+        </div>
+        <div class="quiz-options">
+          ${q.options.map(opt => {
+            const letter = opt.charAt(0);
+            return `<div class="quiz-option" data-question="${qi}" data-letter="${letter}">${escapeHtml(opt)}</div>`;
+          }).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    const keywordsHtml = (article.keywords || []).map(k =>
+      `<span class="article-keyword">${escapeHtml(k)}</span>`
+    ).join('');
+
+    // İlgili makaleler (aynı topic'ten, max 3)
+    const related = articleManifest.articles
+      .filter(a => a.topicId === article.topicId && a.id !== article.id)
+      .slice(0, 3);
+
+    const relatedHtml = related.length > 0 ? `
+      <section class="section">
+        <div class="section-stack">
+          <div class="section-intro">
+            <div class="eyebrow">İlgili içerikler</div>
+            <h2>Bu konudaki diğer makaleler</h2>
+          </div>
+          <div class="daily-topics-grid">
+            ${related.map(r => `
+              <article class="article-card">
+                <div class="article-card-badge">${escapeHtml(getTopicTitle(r.topicId))}</div>
+                <div class="article-card-date">${formatDate(r.createdAt)}</div>
+                <h3>${escapeHtml(r.title)}</h3>
+                <p>${escapeHtml(r.summary)}</p>
+                <a class="article-read-link" href="/icerik/${r.slug}/">Devamını oku →</a>
+              </article>
+            `).join('')}
+          </div>
+        </div>
+      </section>` : '';
+
+    const body = `
+      <main class="page-shell">
+        <div class="container page-center">
+          <div class="breadcrumbs">
+            <a href="/">Ana Sayfa</a><span>/</span><a href="/icerik/">Günün Konusu</a><span>/</span><span>${escapeHtml(article.title)}</span>
+          </div>
+
+          <div class="article-header">
+            <div class="article-meta">
+              <span class="article-topic-badge">${escapeHtml(topicTitle)}</span>
+              <span class="article-date">${dateStr}</span>
+            </div>
+            <h1>${escapeHtml(article.title)}</h1>
+            <p class="article-summary">${escapeHtml(article.summary)}</p>
+          </div>
+
+          <div class="article-body">
+            ${article.content}
+            ${keywordsHtml ? `<div class="article-keywords">${keywordsHtml}</div>` : ''}
+          </div>
+
+          <div class="article-quiz">
+            <h2>📝 Konuyu Test Et</h2>
+            ${questionsHtml}
+            <div style="text-align:center;">
+              <button class="quiz-check-btn" id="quiz-check-btn">Cevapları Kontrol Et</button>
+            </div>
+            <div class="quiz-result" id="quiz-result" style="display:none;">
+              <div class="quiz-result-score" id="quiz-score"></div>
+              <div class="quiz-result-text" id="quiz-detail"></div>
+            </div>
+          </div>
+
+          ${relatedHtml}
+        </div>
+      </main>
+      ${quizScript}`;
+
+    const faqFromQuestions = article.questions.slice(0, 3).map(q => ({
+      '@type': 'Question',
+      name: q.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: q.options.find(o => o.startsWith(q.answer))?.substring(3) || ''
+      }
+    }));
+
+    writeFile(
+      `icerik/${article.slug}/index.html`,
+      pageLayout({
+        title: `${article.title} | KPSS Tarih`,
+        description: article.summary,
+        canonicalPath: `/icerik/${article.slug}/`,
+        body,
+        structuredData: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: article.title,
+            description: article.summary,
+            datePublished: article.createdAt,
+            url: `${siteUrl}/icerik/${article.slug}/`,
+            publisher: {
+              '@type': 'Organization',
+              name: 'KPSS Tarih'
+            },
+            keywords: (article.keywords || []).join(', ')
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqFromQuestions
+          }
+        ]
+      })
+    );
+  });
+
+  console.log(`  ✅ ${articleManifest.articles.length} makale sayfası üretildi.`);
+}
+
+function generateArticleListPage() {
+  if (articleManifest.articles.length === 0) {
+    // Boş bir arşiv sayfası oluştur
+    const body = `
+      <main class="page-shell">
+        <div class="container page-center">
+          <div class="breadcrumbs"><a href="/">Ana Sayfa</a><span>/</span><span>Günün Konusu</span></div>
+          <div class="hero-main" style="max-width:980px;">
+            <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="88" height="88" /></div>
+            <div class="eyebrow">📚 KPSS Tarih Günün Konuları</div>
+            <h1>Günün Konusu Arşivi</h1>
+            <p class="lead">Yakında burada KPSS Tarih konularında güncel makaleler ve mini quizler yer alacak.</p>
+          </div>
+        </div>
+      </main>`;
+
+    writeFile(
+      'icerik/index.html',
+      pageLayout({
+        title: 'Günün Konusu Arşivi | KPSS Tarih Günlük Tekrarlar',
+        description: 'KPSS Tarih konularında yapay zeka tarafından hazırlanan güncel konu özetleri ve mini testler.',
+        canonicalPath: '/icerik/',
+        body
+      })
+    );
+    return;
+  }
+
+  const articlesHtml = articleManifest.articles.map(article => `
+    <article class="article-card">
+      <div class="article-card-badge">${escapeHtml(getTopicTitle(article.topicId))}</div>
+      <div class="article-card-date">${formatDate(article.createdAt)}</div>
+      <h3>${escapeHtml(article.title)}</h3>
+      <p>${escapeHtml(article.summary)}</p>
+      <a class="article-read-link" href="/icerik/${article.slug}/">Devamını oku →</a>
+    </article>
+  `).join('');
+
+  const body = `
+    <main class="page-shell">
+      <div class="container page-center">
+        <div class="breadcrumbs"><a href="/">Ana Sayfa</a><span>/</span><span>Günün Konusu</span></div>
+        <div class="hero-main" style="max-width:980px;">
+          <div class="icon-box" style="width:132px; height:132px; margin-bottom:28px;"><img src="/favicon.svg" alt="KPSS Tarih logosu" width="88" height="88" /></div>
+          <div class="eyebrow">📚 KPSS Tarih Günün Konuları</div>
+          <h1>Günün Konusu Arşivi</h1>
+          <p class="lead">KPSS Tarih konularında yapay zeka tarafından 6 saatte bir hazırlanan güncel konu anlatımları ve interaktif mini testler.</p>
+        </div>
+        <section class="section">
+          <div class="articles-list">
+            ${articlesHtml}
+          </div>
+        </section>
+      </div>
+    </main>`;
+
+  writeFile(
+    'icerik/index.html',
+    pageLayout({
+      title: 'Günün Konusu Arşivi | KPSS Tarih Günlük Tekrarlar',
+      description: 'KPSS Tarih konularında yapay zeka tarafından 6 saatte bir hazırlanan güncel konu özetleri ve interaktif mini testler.',
+      canonicalPath: '/icerik/',
+      body,
+      structuredData: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Günün Konusu Arşivi',
+          url: `${siteUrl}/icerik/`
+        }
+      ]
+    })
+  );
+
+  console.log(`  ✅ Makale arşiv sayfası üretildi (${articleManifest.articles.length} makale).`);
+}
+
 generateHomePage();
 generateTopicsPage();
 generateTopicDetailPages();
@@ -1135,4 +1479,7 @@ generateContactPage();
 generatePrivacyPage();
 generateIntentPages();
 generateQuizEntry();
+generateArticlePages();
+generateArticleListPage();
 generateSitemapAndRobots();
+console.log('\n🎉 Tüm sayfalar ve sitemap üretildi!');
