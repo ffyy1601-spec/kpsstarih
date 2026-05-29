@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-05-29-kpss-tarih-harf-inkilabi-ve-egitim-alanindaki-ataturk-devrimleri-rehberi",
+      "topicId": "ataturk-ilkel-ve-inkilaplari",
+      "subject": "Harf inkılabı ve eğitim alanındaki devrimler",
+      "title": "KPSS Tarih: Harf İnkılabı ve Eğitim Alanındaki Atatürk Devrimleri Rehberi",
+      "slug": "kpss-tarih-harf-inkilabi-ve-egitim-alanindaki-ataturk-devrimleri-rehberi",
+      "summary": "KPSS Tarih sınavında her yıl soru getiren Harf İnkılabı, Tevhid-i Tedrisat Kanunu, Millet Mektepleri ve eğitim alanındaki diğer tüm inkılapların detaylı analizi.",
+      "createdAt": "2026-05-29T02:30:25.713Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-05-28-gazneliler-devleti-ve-sultan-mahmut-donemi-kpss-tarih-detayli-konu-anlatimi",
       "topicId": "ilk-turk-islam-devletleri",
       "subject": "Gazneliler ve Sultan Mahmut dönemi",
