@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-05-30-kpss-tarih-soguk-savas-donemi-ve-iki-kutuplu-dunya-duzeni-detayli-konu-anlatimi",
+      "topicId": "cagdas-turk-ve-dunya",
+      "subject": "Soğuk Savaş dönemi ve iki kutuplu dünya düzeni",
+      "title": "KPSS Tarih: Soğuk Savaş Dönemi ve İki Kutuplu Dünya Düzeni Detaylı Konu Anlatımı",
+      "slug": "kpss-tarih-soguk-savas-donemi-ve-iki-kutuplu-dunya-duzeni-detayli-konu-anlatimi",
+      "summary": "KPSS Çağdaş Türk ve Dünya Tarihi'nin en önemli konusu olan Soğuk Savaş Dönemi, Doğu-Batı blokları, Truman Doktrini, Marshall Planı, Türkiye'nin NATO'ya girişi ve çok partili hayata geçiş süreçlerini kapsayan kapsamlı sınav rehberi.",
+      "createdAt": "2026-05-30T08:18:47.651Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-05-30-kpss-tarih-toplumsal-hayatta-yapilan-inkilaplar-kiyafet-takvim-ve-olcu-birimleri",
       "topicId": "ataturk-ilkel-ve-inkilaplari",
       "subject": "Toplumsal hayatta yapılan değişiklikler: kıyafet, takvim, ölçü birimleri",
