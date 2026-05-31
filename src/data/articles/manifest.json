@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-05-31-kpss-tarih-kore-savasi-ve-turkiyenin-katilimi-detayli-konu-anlatimi",
+      "topicId": "cagdas-turk-ve-dunya",
+      "subject": "Kore Savaşı ve Türkiyenin katılımı",
+      "title": "KPSS Tarih: Kore Savaşı ve Türkiye'nin Katılımı (Detaylı Konu Anlatımı)",
+      "slug": "kpss-tarih-kore-savasi-ve-turkiyenin-katilimi-detayli-konu-anlatimi",
+      "summary": "KPSS tarih sınavına hazırlananlar için Kore Savaşı'nın nedenleri, Türkiye'nin asker gönderme süreci, Şimal Yıldızı Tugayı, Kunuri Muharebeleri ve NATO üyeliği konularını kapsayan kapsamlı rehber.",
+      "createdAt": "2026-05-31T19:05:26.046Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-05-31-kpss-tarih-tanzimat-ve-islahat-fermanlari-konu-anlatimi-farklari-ve-sinav-ipucla",
       "topicId": "osmanli-siyasi-tarihi",
       "subject": "Tanzimat ve Islahat Fermanları",
