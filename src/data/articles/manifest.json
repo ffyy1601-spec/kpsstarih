@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-01-osmanli-devletinde-egitim-sistemi-sibyan-mektepleri-ve-medreseler-kpss-tarih",
+      "topicId": "osmanli-kultur-medeniyeti",
+      "subject": "Osmanlıda eğitim: medreseler ve sıbyan mektepleri",
+      "title": "Osmanlı Devleti'nde Eğitim Sistemi: Sıbyan Mektepleri ve Medreseler (KPSS Tarih)",
+      "slug": "osmanli-devletinde-egitim-sistemi-sibyan-mektepleri-ve-medreseler-kpss-tarih",
+      "summary": "Osmanlı eğitim sisteminin temeli olan sıbyan mektepleri ve medreselerin yapısı, müfredatı, unvanları ve KPSS sınavında çıkabilecek önemli terimlerin detaylı analizini içeren kapsamlı rehber.",
+      "createdAt": "2026-06-01T21:23:50.754Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-01-osmanli-hukuk-sistemi-seri-ve-orfi-hukuk-kpss-tarih-rehberi",
       "topicId": "osmanli-kultur-medeniyeti",
       "subject": "Osmanlı hukuk sistemi: Şeri ve Örfi hukuk",
