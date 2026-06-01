@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-01-osmanli-hukuk-sistemi-seri-ve-orfi-hukuk-kpss-tarih-rehberi",
+      "topicId": "osmanli-kultur-medeniyeti",
+      "subject": "Osmanlı hukuk sistemi: Şeri ve Örfi hukuk",
+      "title": "Osmanlı Hukuk Sistemi: Şer'i ve Örfi Hukuk (KPSS Tarih Rehberi)",
+      "slug": "osmanli-hukuk-sistemi-seri-ve-orfi-hukuk-kpss-tarih-rehberi",
+      "summary": "KPSS Tarih sınavına hazırlananlar için Osmanlı hukuk sisteminin yapısı, Şer'i ve Örfi hukuk ayrımı, mahkeme türleri ve hukuki görevliler detaylı konu anlatımı ve özgün sorularla açıklandı.",
+      "createdAt": "2026-06-01T11:13:23.581Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-01-kpss-tarih-kavimler-gocu-ve-avrupa-hun-devleti-detayli-konu-anlatimi",
       "topicId": "islamiyet-oncesi-turk-tarihi",
       "subject": "Kavimler Göçü ve Avrupa Hun Devleti",
