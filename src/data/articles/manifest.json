@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-02-kpss-tarih-balkan-savaslari-i-ve-ii-balkan-nedenleri-gelisimi-sonuclari-ve-sinav",
+      "topicId": "xx-yuzyilda-osmanli",
+      "subject": "Balkan Savaşları ve sonuçları",
+      "title": "KPSS Tarih: Balkan Savaşları (I. ve II. Balkan), Nedenleri, Gelişimi, Sonuçları ve Sınav İpuçları",
+      "slug": "kpss-tarih-balkan-savaslari-i-ve-ii-balkan-nedenleri-gelisimi-sonuclari-ve-sinav",
+      "summary": "KPSS Tarih sınavına hazırlananlar için I. ve II. Balkan Savaşları'nın nedenleri, sonuçları, antlaşmaları, Bab-ı Ali Baskını ve KPSS'de çıkabilecek önemli ipuçlarını içeren kapsamlı rehber.",
+      "createdAt": "2026-06-02T10:07:50.452Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-02-kpss-tarih-oabt-ve-genel-kultur-odakli-lale-devri-ve-batililasma-hareketleri-reh",
       "topicId": "osmanli-siyasi-tarihi",
       "subject": "Lale Devri ve batılılaşma hareketleri",
