@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-02-kpss-tarih-oabt-ve-genel-kultur-odakli-lale-devri-ve-batililasma-hareketleri-reh",
+      "topicId": "osmanli-siyasi-tarihi",
+      "subject": "Lale Devri ve batılılaşma hareketleri",
+      "title": "KPSS Tarih ÖABT ve Genel Kültür Odaklı Lale Devri ve Batılılaşma Hareketleri Rehberi",
+      "slug": "kpss-tarih-oabt-ve-genel-kultur-odakli-lale-devri-ve-batililasma-hareketleri-reh",
+      "summary": "Lale Devri ıslahatları, Pasarofça Antlaşması, batılılaşma hareketleri ve Patrona Halil İsyanı'nın tüm detayları ile KPSS sınavına yönelik derinlemesine konu anlatımı ve özgün sorular.",
+      "createdAt": "2026-06-02T02:47:04.129Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-01-osmanli-devletinde-egitim-sistemi-sibyan-mektepleri-ve-medreseler-kpss-tarih",
       "topicId": "osmanli-kultur-medeniyeti",
       "subject": "Osmanlıda eğitim: medreseler ve sıbyan mektepleri",
