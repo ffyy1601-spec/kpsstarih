@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-03-kpss-tarih-rehberi-karahanlilar-donemi-ve-turkce-yazilmis-ilk-eserler",
+      "topicId": "ilk-turk-islam-devletleri",
+      "subject": "Karahanlılar ve Türkçe yazılmış ilk eserler",
+      "title": "KPSS Tarih Rehberi: Karahanlılar Dönemi ve Türkçe Yazılmış İlk Eserler",
+      "slug": "kpss-tarih-rehberi-karahanlilar-donemi-ve-turkce-yazilmis-ilk-eserler",
+      "summary": "KPSS Tarih sınavının en önemli konularından biri olan Karahanlılar dönemi, devlet yapısı ve Türk-İslam edebiyatının ilk yazılı eserlerini detaylıca inceleyin.",
+      "createdAt": "2026-06-03T10:45:29.138Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-03-ilk-turk-islam-devletlerinde-toprak-ve-askeri-teskilat-kpss-odakli-kapsamli-rehb",
       "topicId": "ilk-turk-islam-devletleri",
       "subject": "İlk Türk-İslam devletlerinde toprak ve askeri teşkilat",
