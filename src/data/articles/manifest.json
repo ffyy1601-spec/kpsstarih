@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-03-ilk-turk-islam-devletlerinde-toprak-ve-askeri-teskilat-kpss-odakli-kapsamli-rehb",
+      "topicId": "ilk-turk-islam-devletleri",
+      "subject": "İlk Türk-İslam devletlerinde toprak ve askeri teşkilat",
+      "title": "İlk Türk-İslam Devletlerinde Toprak ve Askeri Teşkilat: KPSS Odaklı Kapsamlı Rehber",
+      "slug": "ilk-turk-islam-devletlerinde-toprak-ve-askeri-teskilat-kpss-odakli-kapsamli-rehb",
+      "summary": "İlk Türk-İslam devletlerindeki toprak yönetimi (İkta, Has, Vakıf) ve askeri teşkilat (Gulam, Hassa, Eyalet) konularını KPSS sınav formatına uygun, detaylı ve analiz odaklı ele alan rehber makale.",
+      "createdAt": "2026-06-03T02:55:05.848Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-02-kpss-tarih-balkan-savaslari-i-ve-ii-balkan-nedenleri-gelisimi-sonuclari-ve-sinav",
       "topicId": "xx-yuzyilda-osmanli",
       "subject": "Balkan Savaşları ve sonuçları",
