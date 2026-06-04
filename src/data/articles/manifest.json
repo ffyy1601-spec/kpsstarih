@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-04-anadolu-selcuklu-devleti-kurulusu-kulturel-mirasi-ve-kpss-odakli-konu-anlatimi",
+      "topicId": "ilk-turk-islam-devletleri",
+      "subject": "Anadolu Selçuklu Devletinin kuruluşu ve kültürel mirası",
+      "title": "Anadolu Selçuklu Devleti Kuruluşu, Kültürel Mirası ve KPSS Odaklı Konu Anlatımı",
+      "slug": "anadolu-selcuklu-devleti-kurulusu-kulturel-mirasi-ve-kpss-odakli-konu-anlatimi",
+      "summary": "Anadolu Selçuklu Devleti'nin kuruluşu, yükselişi, ticari politikaları, idari yapısı ve kültürel mirası hakkında KPSS odaklı, detaylı ve soru-cevaplı rehber.",
+      "createdAt": "2026-06-04T14:38:49.746Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-04-kpss-tarih-osmanli-devletinin-son-donem-fikir-akimlari-ve-ozellikleri",
       "topicId": "xx-yuzyilda-osmanli",
       "subject": "Osmanlının son dönem fikir akımları: Osmanlıcılık, İslamcılık, Türkçülük",
