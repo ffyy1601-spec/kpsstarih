@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-05-hatay-meselesi-ve-hatayin-anavatana-katilmasi-kpss-tarih-konu-anlatimi",
+      "topicId": "ataturk-donemi-dis-politika",
+      "subject": "Hatay meselesi ve Hatayın anavatana katılması",
+      "title": "Hatay Meselesi ve Hatay'ın Anavatana Katılması: KPSS Tarih Konu Anlatımı",
+      "slug": "hatay-meselesi-ve-hatayin-anavatana-katilmasi-kpss-tarih-konu-anlatimi",
+      "summary": "KPSS Tarih sınavına hazırlananlar için Hatay Meselesi, 1921 Ankara Antlaşması, Sandler Raporu, Hatay Cumhuriyeti ve Hatay'ın anavatana katılma sürecini içeren kapsamlı rehber.",
+      "createdAt": "2026-06-05T09:34:01.503Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-05-bozkir-kulturu-ve-konar-gocer-yasam-tarzinin-ilk-turk-devlet-yapisina-etkisi-kps",
       "topicId": "islamiyet-oncesi-turk-tarihi",
       "subject": "Bozkır kültürü ve konar-göçer yaşam tarzının devlet yapısına etkisi",
