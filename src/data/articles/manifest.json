@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-05-kpss-tarih-rehberi-natonun-kurulusu-ve-turkiyenin-uyelik-sureci",
+      "topicId": "cagdas-turk-ve-dunya",
+      "subject": "NATOnun kuruluşu ve Türkiyenin üyeliği",
+      "title": "KPSS Tarih Rehberi: NATO'nun Kuruluşu ve Türkiye'nin Üyelik Süreci",
+      "slug": "kpss-tarih-rehberi-natonun-kurulusu-ve-turkiyenin-uyelik-sureci",
+      "summary": "KPSS adayları için NATO'nun kuruluşu, Türkiye'nin üyelik süreci, Kore Savaşı'nın rolü ve Demokrat Parti dönemi gelişmelerini içeren kapsamlı konu anlatımı.",
+      "createdAt": "2026-06-05T14:28:48.952Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-05-hatay-meselesi-ve-hatayin-anavatana-katilmasi-kpss-tarih-konu-anlatimi",
       "topicId": "ataturk-donemi-dis-politika",
       "subject": "Hatay meselesi ve Hatayın anavatana katılması",
