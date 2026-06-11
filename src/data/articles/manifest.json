@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": "2026-06-11-kpss-tarih-musul-meselesi-ve-turkiye-irak-sinir-sorunu-konu-anlatimi",
+      "topicId": "ataturk-donemi-dis-politika",
+      "subject": "Musul meselesi ve Türkiye-Irak sınır sorunu",
+      "title": "KPSS Tarih: Musul Meselesi ve Türkiye-Irak Sınır Sorunu Konu Anlatımı",
+      "slug": "kpss-tarih-musul-meselesi-ve-turkiye-irak-sinir-sorunu-konu-anlatimi",
+      "summary": "KPSS Tarih sınavı için Musul Meselesi, Lozan Konferansı, Haliç Konferansı, Şeyh Sait İsyanı ve 1926 Ankara Antlaşması'nı kapsayan, detaylı ve sınav odaklı rehber.",
+      "createdAt": "2026-06-11T20:11:47.241Z",
+      "questionCount": 10
+    },
+    {
       "id": "2026-06-11-ilk-turk-devletlerinde-kut-anlayisi-ve-hukumranlik-mesruiyeti-kpss-tarih-rehberi",
       "topicId": "islamiyet-oncesi-turk-tarihi",
       "subject": "İlk Türk devletlerinde Kut anlayışı ve hükümranlık meşruiyeti",
